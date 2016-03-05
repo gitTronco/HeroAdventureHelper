@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="TypefacedTextView">
+        <attr name="setTypeface" format="enum">
+            <enum name="8bitsComputer" value="0" />
+            <enum name="Adventure Time" value="1" />
+            <enum name="FontAwesome" value="14" />
+        </attr>
+        <attr name="setSpacing" format="integer" />
+    </declare-styleable>
+    <declare-styleable name="CollapsableLayoutView">
+        <attr name="setCollapseInitState" format="enum">
+            <enum name="opened" value="1" />
+            <enum name="closed" value="2" />
+        </attr>
+        <attr name="setCollapseAnimationTime" format="integer"/>
+    </declare-styleable>
+</resources>
