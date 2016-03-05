@@ -1,119 +1,72 @@
 package com.troncodroide.heroadventurehelper;
 
+import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
+import android.support.design.widget.CoordinatorLayout;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
-import android.view.Menu;
-import android.view.MenuItem;
+import android.widget.ProgressBar;
 
-import com.troncodroide.heroadventurehelper.repository.RepoDAO;
-import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
-import com.troncodroide.heroadventurehelper.repository.request.BaseRequest;
-import com.troncodroide.heroadventurehelper.repository.request.GetTownInfoRequest;
-import com.troncodroide.heroadventurehelper.repository.responses.GetTownInfoResponse;
+import com.troncodroide.heroadventurehelper.Base.BaseActivity;
+import com.troncodroide.heroadventurehelper.launch.HerosListRecyclerViewAdapter;
+import com.troncodroide.heroadventurehelper.launch.presenter.LaunchPresenter;
+import com.troncodroide.heroadventurehelper.models.HeroData;
 
-public class LaunchActivity extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener {
+import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
+public class LaunchActivity extends BaseActivity implements LaunchPresenter.LaunchPresenterInterface {
+
+    @Bind(R.id.loading)
+    ProgressBar loading;
+
+    @Bind(R.id.recyclerView)
+    RecyclerView recyclerView;
+
+    @Bind(R.id.wrapper_heros_list)
+    View wrapper_heros;
+
+    LaunchPresenter presenter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_launch);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
+        ButterKnife.bind(this);
+        snackbar_target = ButterKnife.findById(this, R.id.snackbar_target);
+        wrapper_heros.setVisibility(View.GONE);
+        presenter = new LaunchPresenter(this);
+        presenter.getAPPdata();
+    }
 
-        final FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
+    @Override
+    public void onHerosSuccess(List<HeroData> items) {
+        wrapper_heros.setVisibility(View.VISIBLE);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(new HerosListRecyclerViewAdapter(items, new HerosListRecyclerViewAdapter.HerosListListener() {
             @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+            public void onItemClick(HeroData heroData) {
+                startActivity(new Intent(LaunchActivity.this, MainActivity.class));
             }
-        });
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-        drawer.setDrawerListener(toggle);
-        toggle.syncState();
-
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        navigationView.setNavigationItemSelectedListener(this);
-
-        RepoDAO.DATA.getData(new BaseRequest<>(new GetTownInfoRequest()), new Response.Listener<GetTownInfoResponse>() {
-            @Override
-            public void onSuccess(GetTownInfoResponse data, boolean hideLoading) {
-                Snackbar.make(fab, "OnSuccess", Snackbar.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onError(Response.Error error) {
-                Snackbar.make(fab, "Error:" + error.toString(), Snackbar.LENGTH_LONG).show();
-            }
-        });
+        }));
     }
 
     @Override
-    public void onBackPressed() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        if (drawer.isDrawerOpen(GravityCompat.START)) {
-            drawer.closeDrawer(GravityCompat.START);
-        } else {
-            super.onBackPressed();
-        }
+    public void startLoading(String title, String message) {
+        loading.setVisibility(View.VISIBLE);
     }
 
     @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.launch, menu);
-        return true;
+    public void stopLoading() {
+        loading.setVisibility(View.GONE);
+
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public void onError(int errorCode, String name) {
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }
-
-    @SuppressWarnings("StatementWithEmptyBody")
-    @Override
-    public boolean onNavigationItemSelected(MenuItem item) {
-        // Handle navigation view item clicks here.
-        int id = item.getItemId();
-
-        if (id == R.id.nav_camera) {
-            // Handle the camera action
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-
-        } else if (id == R.id.nav_send) {
-
-        }
-
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
-        drawer.closeDrawer(GravityCompat.START);
-        return true;
     }
 }

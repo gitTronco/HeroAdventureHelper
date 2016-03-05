@@ -2,11 +2,10 @@
 <resources>
     <declare-styleable name="TypefacedTextView">
         <attr name="setTypeface" format="enum">
-            <enum name="8bitsComputer" value="0" />
-            <enum name="Adventure Time" value="1" />
-            <enum name="FontAwesome" value="14" />
+            <enum name="EightBits" value="0" />
+            <enum name="FontAwesome" value="1" />
+            <enum name="Kirbis" value="2" />
         </attr>
-        <attr name="setSpacing" format="integer" />
     </declare-styleable>
     <declare-styleable name="CollapsableLayoutView">
         <attr name="setCollapseInitState" format="enum">

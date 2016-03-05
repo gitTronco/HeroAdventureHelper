@@ -12,6 +12,8 @@ import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.APP;
 
+import butterknife.ButterKnife;
+
 
 public class BaseActivity extends AppCompatActivity {
     private ProgressDialog pd;
@@ -67,31 +69,32 @@ public class BaseActivity extends AppCompatActivity {
 
     private ProgressDialog loadingDialog(String title, String message) {
 
-        ProgressDialog progDialog = new ProgressDialog(this) {
-            TextView title, message;
-
-            @Override
-            public void setMessage(CharSequence message) {
-                super.setMessage(message);
-                if (this.message == null)
-                    this.message = (TextView) this.findViewById(android.R.id.message);
-                this.message.setText(message);
-            }
-
-            @Override
-            public void setTitle(CharSequence title) {
-                super.setTitle(title);
-                if (this.title == null)
-                    this.title = (TextView) this.findViewById(android.R.id.title);
-                this.title.setText(title);
-            }
-        };
+        ProgressDialog progDialog = new ProgressDialog(this);
+//        {
+//            TextView title, message;
+//
+//            @Override
+//            public void setMessage(CharSequence message) {
+//                super.setMessage(message);
+//                if (this.message == null)
+//                    this.message = (TextView) this.findViewById(android.R.id.message);
+//                this.message.setText(message);
+//            }
+//
+//            @Override
+//            public void setTitle(CharSequence title) {
+//                super.setTitle(title);
+//                if (this.title == null)
+//                    this.title = (TextView) this.findViewById(android.R.id.title);
+//                this.title.setText(title);
+//            }
+//        };
         progDialog.setCancelable(false);
         progDialog.show();
         //progDialog.setContentView(R.layout.progress_dialog_simple);
-        progDialog.setMessage(message);
         progDialog.setTitle(title);
-        progDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        progDialog.setMessage(message);
+        //progDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
         return progDialog;
     }

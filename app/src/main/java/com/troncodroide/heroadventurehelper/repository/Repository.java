@@ -3,6 +3,7 @@ package com.troncodroide.heroadventurehelper.repository;
 import com.github.pwittchen.prefser.library.Prefser;
 import com.github.pwittchen.prefser.library.TypeToken;
 import com.troncodroide.heroadventurehelper.APP;
+import com.troncodroide.heroadventurehelper.models.HeroData;
 import com.troncodroide.heroadventurehelper.repository.api.TTL;
 import com.troncodroide.heroadventurehelper.repository.api.cache.DiskCache;
 import com.troncodroide.heroadventurehelper.repository.api.cache.MemCache;
@@ -11,14 +12,17 @@ import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenData;
 import com.troncodroide.heroadventurehelper.repository.request.BaseRequest;
 import com.troncodroide.heroadventurehelper.repository.request.GetCiticensRequest;
+import com.troncodroide.heroadventurehelper.repository.request.GetHerosRequest;
 import com.troncodroide.heroadventurehelper.repository.request.GetTownInfoRequest;
 import com.troncodroide.heroadventurehelper.repository.responses.GetCiticensResponse;
+import com.troncodroide.heroadventurehelper.repository.responses.GetHerosResponse;
 import com.troncodroide.heroadventurehelper.repository.responses.GetTownInfoResponse;
 
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-public class RepoDAO {
+public class Repository {
 
     private static MemCache memCache;
     private static DiskCache diskCache;
@@ -45,26 +49,26 @@ public class RepoDAO {
         return prefser;
     }
 
-    public static class Hero {
+    public static class HERO {
 
         public static void getHeroData(final BaseRequest request, final Response.Listener listener) {
 
         }
 
-        public static void addNewHero(BaseRequest request, Response.Listener listener) {
+        public static void getHeros(BaseRequest<GetHerosRequest> request, final Response.Listener<GetHerosResponse> listener) {
+            getMemCache().getData(request.hashRequest(), new MemCache.CacheListener<GetHerosResponse>() {
+                @Override
+                public void onCacheDataRetrieved(String key, GetHerosResponse data, boolean isAlive) {
+                    listener.onSuccess(data, true);
+                }
 
-        }
-
-        public static void editHeroData(BaseRequest request, final Response.Listener listener) {
-
-        }
-
-        public static void deleteHero(BaseRequest request, final Response.Listener listener) {
-
-        }
-
-        public static void getHeros(BaseRequest request, final Response.Listener listener) {
-
+                @Override
+                public void onNoCacheDataFound(String key) {
+                    List<HeroData> heros = new LinkedList<HeroData>();
+                    heros.add(new HeroData());
+                    listener.onSuccess(new GetHerosResponse(heros), true);
+                }
+            });
         }
 
         public static void getHeroStatistics(final BaseRequest request, final Response.Listener listener) {
@@ -129,7 +133,7 @@ public class RepoDAO {
                         @Override
                         public void onDiskDataRetrieved(final String key, GetTownInfoResponse data, boolean isAlive) {
                             listener.onSuccess(data, true);
-                            if (!isAlive){
+                            if (!isAlive) {
                                 API.getAppData(new API.APIListener<Map<String, List<CiticenData>>>() {
                                     @Override
                                     public void onSuccess(Map<String, List<CiticenData>> data) {

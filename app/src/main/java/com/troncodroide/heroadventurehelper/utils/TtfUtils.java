@@ -13,7 +13,6 @@ import java.util.TreeMap;
 public class TtfUtils {
     public static Map<String, Typeface> typefaces = null;
     public static final int DEFAULT_POS_TYPEFACE = 3; //Arial
-    public static final int DEFAULT_SPACING = 0; //Arial
 
     public static Typeface getTypefaceFromAssets(Context c, String filename) {
         if (typefaces == null) {
@@ -58,25 +57,12 @@ public class TtfUtils {
         }
     }
 
-    public static int getSpacingAttrs(Context context, AttributeSet attrs) {
-        TypedArray a = context.getTheme().obtainStyledAttributes(
-                attrs,
-                R.styleable.TypefacedTextView,
-                0, 0);
-        try {
-            int mSpacing = a.getInteger(R.styleable.TypefacedTextView_setSpacing, DEFAULT_SPACING);
-            return mSpacing;
-        } finally {
-            a.recycle();
-        }
-    }
-
     public static String RalewayTypefaces(int pos) {
         String dir = "fonts/";
         String typefaces[] = {
-                "5computerized.ttf",//0
-                "Adventure Time.ttf",//1
-                "fontawesome-webfont.ttf"//3
+                "8-bit pusab.ttf",//0
+                "fontawesome-webfont.ttf",//1
+                "Kirbys-Adventure.ttf"//2
         };
         return dir+typefaces[pos];
     }

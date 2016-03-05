@@ -25,22 +25,16 @@ public class DiskCache {
 
 
     public <T> void getData(final String key, final TypeToken<TTL<T>> typeToken, final DiskListener<T> listener) {
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                if (containsKey(key)) {
-                    TTL<T> data = getPrefser(key).get(key, typeToken, new TTL<T>(null));
-                    if (data.getData() == null) {
-                        listener.onNoDiskDataFound(key);
-                    } else {
-                        listener.onDiskDataRetrieved(key, (T) data.getData(), data.isAlive());
-                    }
-                } else {
-                    listener.onNoDiskDataFound(key);
-                }
+        if (containsKey(key)) {
+            TTL<T> data = getPrefser(key).get(key, typeToken, new TTL<T>(null));
+            if (data.getData() == null) {
+                listener.onNoDiskDataFound(key);
+            } else {
+                listener.onDiskDataRetrieved(key, (T) data.getData(), data.isAlive());
             }
-        });
-        t.start();
+        } else {
+            listener.onNoDiskDataFound(key);
+        }
     }
 
     private Prefser getPrefser() {
@@ -53,6 +47,7 @@ public class DiskCache {
     /**
      * Prefer carga en memoria toda la información que existe en el xml. WsI ES UN archivo enorme la memoria se resiente.
      * Usando namespace se pueden crear distintso xml donde volcar parcialmente la memoria de respuestas gtandes
+     *
      * @param namespace then name for shared preferences file.
      * @return Prefser instance
      */
