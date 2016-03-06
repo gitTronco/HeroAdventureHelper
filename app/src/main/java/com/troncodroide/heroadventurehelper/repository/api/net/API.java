@@ -1,13 +1,10 @@
 package com.troncodroide.heroadventurehelper.repository.api.net;
 
-import android.util.Log;
-
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
-import com.troncodroide.heroadventurehelper.repository.models.CiticenData;
+import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
 import com.troncodroide.heroadventurehelper.repository.retrofit.RetroManager;
 import com.troncodroide.heroadventurehelper.repository.retrofit.RetrofitServices;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,7 +19,7 @@ public class API {
         void onError(Response.Error<String> error);
     }
 
-    public static void getAppData(final APIListener<Map<String,List<CiticenData>>> result) {
+    public static void getAppData(final APIListener<Map<String,List<CiticenDataRepository>>> result) {
         RetroManager.createService(RetrofitServices.TOWN.class).getTownDetail().enqueue(new NetCallback<>(result));
     }
 }

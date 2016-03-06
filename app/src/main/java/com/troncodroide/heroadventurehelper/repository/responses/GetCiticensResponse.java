@@ -1,14 +1,13 @@
 package com.troncodroide.heroadventurehelper.repository.responses;
 
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
-import com.troncodroide.heroadventurehelper.repository.models.CiticenData;
+import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
 
 import java.util.List;
-import java.util.Map;
 
-public class GetCiticensResponse extends Response<List<CiticenData>> {
+public class GetCiticensResponse extends Response<List<CiticenDataRepository>> {
 
-    public GetCiticensResponse(List<CiticenData> data) {
+    public GetCiticensResponse(List<CiticenDataRepository> data) {
         super(data);
     }
 }

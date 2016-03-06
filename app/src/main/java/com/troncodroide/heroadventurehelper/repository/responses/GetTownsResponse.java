@@ -1,19 +1,17 @@
 package com.troncodroide.heroadventurehelper.repository.responses;
 
+import com.troncodroide.heroadventurehelper.models.TownData;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
+import com.troncodroide.heroadventurehelper.repository.models.TownDataRepository;
 
 import java.util.List;
 import java.util.Map;
 
-public class GetTownInfoResponse extends Response<Map<String, List<CiticenDataRepository>>> {
+public class GetTownsResponse extends Response<List<TownDataRepository>> {
 
-    public GetTownInfoResponse(Map<String, List<CiticenDataRepository>> data) {
+    public GetTownsResponse(List<TownDataRepository> data) {
         super(data);
     }
 
-    @Override
-    public String toString() {
-        return "GetTownInfoResponse{}";
-    }
 }

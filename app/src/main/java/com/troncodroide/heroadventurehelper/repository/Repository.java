@@ -9,14 +9,17 @@ import com.troncodroide.heroadventurehelper.repository.api.cache.DiskCache;
 import com.troncodroide.heroadventurehelper.repository.api.cache.MemCache;
 import com.troncodroide.heroadventurehelper.repository.api.net.API;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
-import com.troncodroide.heroadventurehelper.repository.models.CiticenData;
+import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
+import com.troncodroide.heroadventurehelper.repository.models.TownDataRepository;
 import com.troncodroide.heroadventurehelper.repository.request.BaseRequest;
 import com.troncodroide.heroadventurehelper.repository.request.GetCiticensRequest;
 import com.troncodroide.heroadventurehelper.repository.request.GetHerosRequest;
 import com.troncodroide.heroadventurehelper.repository.request.GetTownInfoRequest;
+import com.troncodroide.heroadventurehelper.repository.request.GetTownsRequest;
 import com.troncodroide.heroadventurehelper.repository.responses.GetCiticensResponse;
 import com.troncodroide.heroadventurehelper.repository.responses.GetHerosResponse;
 import com.troncodroide.heroadventurehelper.repository.responses.GetTownInfoResponse;
+import com.troncodroide.heroadventurehelper.repository.responses.GetTownsResponse;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -78,6 +81,36 @@ public class Repository {
 
     public static class TOWN {
 
+        public static void getTowns(final BaseRequest<GetTownsRequest> request, final Response.Listener<GetTownsResponse> listener) {
+            getMemCache().getData(request.hashRequest(), new MemCache.CacheListener<GetTownsResponse>() {
+                @Override
+                public void onCacheDataRetrieved(String key, GetTownsResponse data, boolean isAlive) {
+                    listener.onSuccess(data, true);
+                }
+
+                @Override
+                public void onNoCacheDataFound(final String key) {
+                    DATA.getData(new BaseRequest<>(new GetTownInfoRequest()), new Response.Listener<GetTownInfoResponse>() {
+                        @Override
+                        public void onSuccess(GetTownInfoResponse data, boolean hideLoading) {
+                            List<TownDataRepository> towns = new LinkedList<>();
+                            for (String townName : data.getData().keySet()) {
+                                towns.add(new TownDataRepository(townName, data.getData().get(townName)));
+                            }
+                            GetTownsResponse response = new GetTownsResponse(towns);
+                            getMemCache().putData(key, response);
+                            listener.onSuccess(new GetTownsResponse(towns), true);
+                        }
+
+                        @Override
+                        public void onError(Response.Error error) {
+                            listener.onError(error);
+                        }
+                    });
+                }
+            });
+        }
+
         public static void getInfoTown(final BaseRequest request, Response.Listener listener) {
 
         }
@@ -94,7 +127,7 @@ public class Repository {
                     DATA.getData(new BaseRequest<>(new GetTownInfoRequest()), new Response.Listener<GetTownInfoResponse>() {
                         @Override
                         public void onSuccess(GetTownInfoResponse data, boolean hideLoading) {
-                            List<CiticenData> citicens = data.getData().get(request.getData().getTown());
+                            List<CiticenDataRepository> citicens = data.getData().get(request.getData().getTown());
                             GetCiticensResponse response = new GetCiticensResponse(citicens);
                             getMemCache().putData(key, response);
                             listener.onSuccess(response, true);
@@ -134,9 +167,9 @@ public class Repository {
                         public void onDiskDataRetrieved(final String key, GetTownInfoResponse data, boolean isAlive) {
                             listener.onSuccess(data, true);
                             if (!isAlive) {
-                                API.getAppData(new API.APIListener<Map<String, List<CiticenData>>>() {
+                                API.getAppData(new API.APIListener<Map<String, List<CiticenDataRepository>>>() {
                                     @Override
-                                    public void onSuccess(Map<String, List<CiticenData>> data) {
+                                    public void onSuccess(Map<String, List<CiticenDataRepository>> data) {
                                         getMemCache().putData(key, new GetTownInfoResponse(data));
                                         getDiskCache().putData(key, new GetTownInfoResponse(data));
                                     }
@@ -151,9 +184,9 @@ public class Repository {
 
                         @Override
                         public void onNoDiskDataFound(final String key) {
-                            API.getAppData(new API.APIListener<Map<String, List<CiticenData>>>() {
+                            API.getAppData(new API.APIListener<Map<String, List<CiticenDataRepository>>>() {
                                 @Override
-                                public void onSuccess(Map<String, List<CiticenData>> data) {
+                                public void onSuccess(Map<String, List<CiticenDataRepository>> data) {
                                     getMemCache().putData(key, new GetTownInfoResponse(data));
                                     getDiskCache().putData(key, new GetTownInfoResponse(data));
                                     listener.onSuccess(new GetTownInfoResponse(data), true);

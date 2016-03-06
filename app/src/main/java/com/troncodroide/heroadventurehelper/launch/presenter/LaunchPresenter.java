@@ -43,8 +43,8 @@ public class LaunchPresenter extends BasePresenter implements LaunchInteractor.H
 
     @Override
     public void onGetHerosSuccess(List<HeroData> items) {
-        ((LaunchPresenterInterface) _listener).onHerosSuccess(items);
         stopLoading();
+        ((LaunchPresenterInterface) _listener).onHerosSuccess(items);
     }
 
     @Override

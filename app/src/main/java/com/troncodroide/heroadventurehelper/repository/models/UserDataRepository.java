@@ -3,12 +3,9 @@ package com.troncodroide.heroadventurehelper.repository.models;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
 import java.util.Random;
 
-public class UserData implements Parcelable {
+public class UserDataRepository implements Parcelable {
     int id;
     String name;
     String email;
@@ -49,10 +46,10 @@ public class UserData implements Parcelable {
     }
 
 
-    public UserData() {
+    public UserDataRepository() {
     }
 
-    public UserData(boolean sample) {
+    public UserDataRepository(boolean sample) {
         Random ran = new Random();
         this.id = ran.nextInt(100);
         this.name = "Jhon";
@@ -122,7 +119,7 @@ public class UserData implements Parcelable {
         dest.writeString(this.url_img);
     }
 
-    protected UserData(Parcel in) {
+    protected UserDataRepository(Parcel in) {
         this.id = in.readInt();
         this.num_addresses= in.readInt();
         this.num_credit_cards = in.readInt();
@@ -135,13 +132,13 @@ public class UserData implements Parcelable {
         this.url_img = in.readString();
     }
 
-    public static final Creator<UserData> CREATOR = new Creator<UserData>() {
-        public UserData createFromParcel(Parcel source) {
-            return new UserData(source);
+    public static final Creator<UserDataRepository> CREATOR = new Creator<UserDataRepository>() {
+        public UserDataRepository createFromParcel(Parcel source) {
+            return new UserDataRepository(source);
         }
 
-        public UserData[] newArray(int size) {
-            return new UserData[size];
+        public UserDataRepository[] newArray(int size) {
+            return new UserDataRepository[size];
         }
     };
 }

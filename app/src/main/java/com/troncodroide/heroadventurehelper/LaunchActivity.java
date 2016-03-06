@@ -2,15 +2,16 @@ package com.troncodroide.heroadventurehelper;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.CoordinatorLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 
 import com.troncodroide.heroadventurehelper.Base.BaseActivity;
 import com.troncodroide.heroadventurehelper.launch.HerosListRecyclerViewAdapter;
 import com.troncodroide.heroadventurehelper.launch.presenter.LaunchPresenter;
+import com.troncodroide.heroadventurehelper.managers.HeroManager;
 import com.troncodroide.heroadventurehelper.models.HeroData;
 
 import java.util.List;
@@ -30,6 +31,7 @@ public class LaunchActivity extends BaseActivity implements LaunchPresenter.Laun
     View wrapper_heros;
 
     LaunchPresenter presenter;
+    private static final String TAG = "LaunchActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,12 +46,15 @@ public class LaunchActivity extends BaseActivity implements LaunchPresenter.Laun
 
     @Override
     public void onHerosSuccess(List<HeroData> items) {
+        Log.i(TAG, "onHerosSuccess: " + items.size());
         wrapper_heros.setVisibility(View.VISIBLE);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(new HerosListRecyclerViewAdapter(items, new HerosListRecyclerViewAdapter.HerosListListener() {
             @Override
             public void onItemClick(HeroData heroData) {
+                HeroManager.openHeroSession(heroData);
                 startActivity(new Intent(LaunchActivity.this, MainActivity.class));
+                overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
             }
         }));
     }
@@ -62,11 +67,10 @@ public class LaunchActivity extends BaseActivity implements LaunchPresenter.Laun
     @Override
     public void stopLoading() {
         loading.setVisibility(View.GONE);
-
     }
 
     @Override
     public void onError(int errorCode, String name) {
-
+        showMessage(name);
     }
 }

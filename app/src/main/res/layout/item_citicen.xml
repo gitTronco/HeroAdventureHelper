@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/card_town"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="@dimen/text_padding"
+    app:contentPadding="@dimen/text_padding">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <com.troncodroide.heroadventurehelper.views.TypefacedTextView
+            android:id="@+id/citicen_card_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/text_padding"
+            android:text="NAME"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            app:setTypeface="Kirbis" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/citicen_card_image"
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:background="@color/cardview_dark_background" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_padding"
+                android:orientation="vertical"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small">
+
+
+                <com.troncodroide.heroadventurehelper.views.TypefacedTextView
+                    android:id="@+id/citicen_card_age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="AGE"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:setTypeface="Kirbis" />
+
+                <com.troncodroide.heroadventurehelper.views.TypefacedTextView
+                    android:id="@+id/citicen_card_hair"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HAIR:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:setTypeface="Kirbis" />
+
+                <com.troncodroide.heroadventurehelper.views.TypefacedTextView
+                    android:id="@+id/citicen_card_weight"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="WEIGHT:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:setTypeface="Kirbis" />
+
+                <com.troncodroide.heroadventurehelper.views.TypefacedTextView
+                    android:id="@+id/citicen_card_height"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="HEIGHT:"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                    app:setTypeface="Kirbis" />
+
+            </LinearLayout>
+        </LinearLayout>
+
+        <com.troncodroide.heroadventurehelper.views.CollapsableLayoutView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.troncodroide.heroadventurehelper.views.ExpandedListView
+                android:id="@+id/citicen_card_friends"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.troncodroide.heroadventurehelper.views.CollapsableLayoutView>
+
+        <com.troncodroide.heroadventurehelper.views.CollapsableLayoutView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <com.troncodroide.heroadventurehelper.views.ExpandedListView
+                android:id="@+id/citicen_card_profesions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+        </com.troncodroide.heroadventurehelper.views.CollapsableLayoutView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:orientation="horizontal">
+
+            <com.troncodroide.heroadventurehelper.views.TypefacedButton
+                android:id="@+id/citicen_card_help"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="help"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                app:setTypeface="Kirbis" />
+        </LinearLayout>
+    </LinearLayout>
+
+
+</android.support.v7.widget.CardView>

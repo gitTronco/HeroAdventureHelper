@@ -1,6 +1,9 @@
 package com.troncodroide.heroadventurehelper.repository.api.cache;
 
 import android.content.Context;
+import android.os.Handler;
+import android.os.Looper;
+import android.os.Message;
 import android.util.Log;
 
 import com.github.pwittchen.prefser.library.Prefser;
@@ -8,11 +11,12 @@ import com.github.pwittchen.prefser.library.TypeToken;
 import com.troncodroide.heroadventurehelper.APP;
 import com.troncodroide.heroadventurehelper.repository.api.TTL;
 
-/**
- * Created by Usuario-007 on 22/02/2016.
- */
+import java.lang.ref.WeakReference;
+
 public class DiskCache {
     public static final String TAG = "DiskCache";
+    private static final int MESSAGE_NO_DISK = 1;
+    private static final int MESSAGE_GET_DATA = 2;
     private static Prefser prefser;
 
     private void log(String message) {
@@ -23,18 +27,59 @@ public class DiskCache {
         return (getPrefser().contains(key));
     }
 
+    private Handler weakHandler;
+
+    private static class MyHandler extends Handler{
+        public MyHandler(Looper looper) {
+            super(looper);
+        }
+    }
 
     public <T> void getData(final String key, final TypeToken<TTL<T>> typeToken, final DiskListener<T> listener) {
-        if (containsKey(key)) {
-            TTL<T> data = getPrefser(key).get(key, typeToken, new TTL<T>(null));
-            if (data.getData() == null) {
-                listener.onNoDiskDataFound(key);
-            } else {
-                listener.onDiskDataRetrieved(key, (T) data.getData(), data.isAlive());
+        weakHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+            @Override
+            public boolean handleMessage(Message msg) {
+                TTL<T> ttl = (TTL<T>) msg.obj;
+                switch (msg.what) {
+                    case MESSAGE_NO_DISK:
+                        listener.onNoDiskDataFound(key);
+                        break;
+                    case MESSAGE_GET_DATA:
+                        listener.onDiskDataRetrieved(key, (T) ttl.getData(), ttl.isAlive());
+                        break;
+                    default:
+                        break;
+                }
+                weakHandler = null;
+                return true;
             }
-        } else {
-            listener.onNoDiskDataFound(key);
-        }
+        });
+
+        Thread t = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Looper.prepare();
+                if (containsKey(key)) {
+                    TTL<T> data = getPrefser(key).get(key, typeToken, new TTL<T>(null));
+                    if (data.getData() == null) {
+                        Message completedMessage = weakHandler.obtainMessage(MESSAGE_NO_DISK);
+                        completedMessage.sendToTarget();
+                        //listener.onNoDiskDataFound(key);
+                    } else {
+                        Message completedMessage = weakHandler.obtainMessage(MESSAGE_GET_DATA, data);
+                        completedMessage.sendToTarget();
+//                        listener.onDiskDataRetrieved(key, (T) data.getData(), data.isAlive());
+                    }
+                } else {
+                    Message completedMessage = weakHandler.obtainMessage(MESSAGE_NO_DISK);
+                    completedMessage.sendToTarget();
+                    //listener.onNoDiskDataFound(key);
+                }
+                Looper.loop();
+
+            }
+        });
+        t.start();
     }
 
     private Prefser getPrefser() {
@@ -75,4 +120,5 @@ public class DiskCache {
 
         void onNoDiskDataFound(String key);
     }
+
 }

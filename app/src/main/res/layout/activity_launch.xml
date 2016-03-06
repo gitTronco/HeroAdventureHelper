@@ -34,7 +34,7 @@
             android:indeterminate="true"
             android:padding="@dimen/text_padding" />
 
-        <com.troncodroide.heroadventurehelper.views.CollapsableLayoutView
+        <LinearLayout
             android:id="@+id/wrapper_heros_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -53,7 +53,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:fitsSystemWindows="true" />
-        </com.troncodroide.heroadventurehelper.views.CollapsableLayoutView>
+        </LinearLayout>
     </LinearLayout>
 
 </android.support.design.widget.CoordinatorLayout>

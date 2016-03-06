@@ -8,12 +8,48 @@ import java.util.List;
 /**
  * Created by Tronco on 04/03/2016.
  */
-public class CiticenData implements Parcelable{
+public class CiticenDataRepository implements Parcelable{
     String name,thumbnail,hair_color;
     Integer id,age;
     Double weight,height;
     List<String> professions;
     List<String> friends;
+
+    public String getName() {
+        return name;
+    }
+
+    public String getThumbnail() {
+        return thumbnail;
+    }
+
+    public String getHair_color() {
+        return hair_color;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Integer getAge() {
+        return age;
+    }
+
+    public Double getWeight() {
+        return weight;
+    }
+
+    public Double getHeight() {
+        return height;
+    }
+
+    public List<String> getProfessions() {
+        return professions;
+    }
+
+    public List<String> getFriends() {
+        return friends;
+    }
 
     @Override
     public int describeContents() {
@@ -33,10 +69,10 @@ public class CiticenData implements Parcelable{
         dest.writeStringList(this.friends);
     }
 
-    public CiticenData() {
+    public CiticenDataRepository() {
     }
 
-    protected CiticenData(Parcel in) {
+    protected CiticenDataRepository(Parcel in) {
         this.name = in.readString();
         this.thumbnail = in.readString();
         this.hair_color = in.readString();
@@ -48,13 +84,13 @@ public class CiticenData implements Parcelable{
         this.friends = in.createStringArrayList();
     }
 
-    public static final Creator<CiticenData> CREATOR = new Creator<CiticenData>() {
-        public CiticenData createFromParcel(Parcel source) {
-            return new CiticenData(source);
+    public static final Creator<CiticenDataRepository> CREATOR = new Creator<CiticenDataRepository>() {
+        public CiticenDataRepository createFromParcel(Parcel source) {
+            return new CiticenDataRepository(source);
         }
 
-        public CiticenData[] newArray(int size) {
-            return new CiticenData[size];
+        public CiticenDataRepository[] newArray(int size) {
+            return new CiticenDataRepository[size];
         }
     };
 }
