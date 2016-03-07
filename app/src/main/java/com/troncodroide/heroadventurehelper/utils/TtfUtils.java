@@ -62,8 +62,11 @@ public class TtfUtils {
         String typefaces[] = {
                 "8-bit pusab.ttf",//0
                 "fontawesome-webfont.ttf",//1
-                "Kirbys-Adventure.ttf"//2
+                "Kirbys-Adventure.ttf",//2
+                "MOZART_0.ttf",//3
+                "PressStart2P.ttf",//4
+                "prstart.ttf"//5
         };
-        return dir+typefaces[pos];
+        return dir + typefaces[pos];
     }
 }

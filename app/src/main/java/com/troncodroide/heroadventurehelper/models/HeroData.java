@@ -1,6 +1,7 @@
 package com.troncodroide.heroadventurehelper.models;
 
 import com.troncodroide.heroadventurehelper.R;
+import com.troncodroide.heroadventurehelper.managers.HeroManager;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -50,6 +51,22 @@ public class HeroData {
         } else {
             abilities.add(new Ability(ability));
         }
+        if (getAbilityPoints() / 10 > level) {
+            levelUp();
+        }
+    }
+
+    private void levelUp() {
+        level++;
+        HeroManager.levelUp();
+    }
+
+    private int getAbilityPoints() {
+        int abilitipoitns = 0;
+        for (HeroData.Ability ab : abilities) {
+            abilitipoitns += ab.getLevel();
+        }
+        return abilitipoitns;
     }
 
     public boolean containsAbility(String ability) {

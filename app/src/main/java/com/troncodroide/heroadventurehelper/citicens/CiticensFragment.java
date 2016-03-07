@@ -73,8 +73,29 @@ public class CiticensFragment extends BaseFragment implements CiticensPresenter.
         reciclerView.setAdapter(new CiticensCardListViewAdapter(items, new CiticensCardListViewAdapter.CiticensListListener() {
             @Override
             public void onItemClick(CiticenData data) {
-                showMessage(data.getName());
+                presenter.help(data);
+            }
+
+            @Override
+            public void onFriendClick(CiticenData data, String friend) {
+                presenter.goTo(friend);
+            }
+
+            @Override
+            public void onProfesionClick(CiticenData data, String profesion) {
+                presenter.help(data, profesion);
             }
         }));
+    }
+
+    @Override
+    public void scrollToCiticenPosition(int position) {
+        reciclerView.getLayoutManager().scrollToPosition(position);
+
+    }
+
+    @Override
+    public void reloadCiticensChanges() {
+        reciclerView.getAdapter().notifyDataSetChanged();
     }
 }

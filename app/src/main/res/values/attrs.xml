@@ -5,6 +5,9 @@
             <enum name="EightBits" value="0" />
             <enum name="FontAwesome" value="1" />
             <enum name="Kirbis" value="2" />
+            <enum name="Mozart" value="3" />
+            <enum name="PressStart_2" value="4" />
+            <enum name="PressStart" value="5" />
         </attr>
     </declare-styleable>
     <declare-styleable name="CollapsableLayoutView">

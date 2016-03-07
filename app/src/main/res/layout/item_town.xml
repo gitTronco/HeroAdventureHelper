@@ -27,32 +27,22 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/text_padding"
-                android:orientation="vertical"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small">
+                android:orientation="vertical">
 
                 <com.troncodroide.heroadventurehelper.views.TypefacedTextView
                     android:id="@+id/town_card_name"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="TOWN NAME"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:setTypeface="Kirbis" />
+                    style="@style/text_title"
+                    android:text="TOWN NAME" />
 
                 <com.troncodroide.heroadventurehelper.views.TypefacedTextView
                     android:id="@+id/town_card_population"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="POPULATION"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:setTypeface="Kirbis" />
+                    style="@style/text_normal"
+                    android:text="POPULATION" />
 
                 <com.troncodroide.heroadventurehelper.views.TypefacedTextView
                     android:id="@+id/town_card_progress"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="POPULATION"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                    app:setTypeface="Kirbis" />
+                    style="@style/text_normal"
+                    android:text="POPULATION" />
             </LinearLayout>
         </LinearLayout>
 
@@ -64,11 +54,8 @@
 
             <com.troncodroide.heroadventurehelper.views.TypefacedButton
                 android:id="@+id/town_card_visit"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="visit"
-                android:textAppearance="@style/TextAppearance.AppCompat.Small"
-                app:setTypeface="Kirbis" />
+                style="@style/text_normal"
+                android:text="visit" />
         </LinearLayout>
     </LinearLayout>
 

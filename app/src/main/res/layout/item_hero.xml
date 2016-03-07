@@ -20,19 +20,13 @@
 
         <com.troncodroide.heroadventurehelper.views.TypefacedTextView
             android:id="@+id/hero_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Name:-"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:setTypeface="Kirbis" />
+            style="@style/text_normal" />
 
         <com.troncodroide.heroadventurehelper.views.TypefacedTextView
             android:id="@+id/hero_level"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
             android:text="Level:0"
-            android:textAppearance="@style/TextAppearance.AppCompat.Small"
-            app:setTypeface="Kirbis" />
+            style="@style/text_normal"/>
     </LinearLayout>
 
 </LinearLayout>

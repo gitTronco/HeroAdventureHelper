@@ -18,13 +18,16 @@ public class HeroManager extends Observable {
         this.heroData = hero;
         getPrefser().put(TAG, hero);
         hasSession = true;
-        setChanged();
-        notifyObservers(hasSession);
+        notifyAllChanged();
     }
 
     private void _saveHero() {
         getPrefser().put(TAG, heroData);
         hasSession = true;
+        notifyAllChanged();
+    }
+
+    private void notifyAllChanged() {
         setChanged();
         notifyObservers(hasSession);
     }
@@ -33,8 +36,7 @@ public class HeroManager extends Observable {
         hasSession = false;
         this.heroData = null;
         getPrefser().put(TAG, new HeroData());
-        setChanged();
-        notifyObservers(hasSession);
+        notifyAllChanged();
     }
 
     public static boolean hasSession() {
@@ -89,5 +91,10 @@ public class HeroManager extends Observable {
 
     public static void setUser(HeroData user) {
         getInstance()._openHeroSession(user);
+    }
+
+    public static void levelUp() {
+        saveHeroSession();
+        //TODO notify lvl up
     }
 }
