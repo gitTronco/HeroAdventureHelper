@@ -1,6 +1,7 @@
 package com.troncodroide.heroadventurehelper.repository.api.cache;
 
 import android.content.Context;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.Message;
@@ -27,20 +28,32 @@ public class DiskCache {
         return (getPrefser().contains(key));
     }
 
-    private Handler weakHandler;
-
-    private static class MyHandler extends Handler{
-        public MyHandler(Looper looper) {
-            super(looper);
-        }
-    }
-
     public <T> void getData(final String key, final TypeToken<TTL<T>> typeToken, final DiskListener<T> listener) {
-        weakHandler = new Handler(Looper.getMainLooper(), new Handler.Callback() {
+
+        AsyncTask<Void, Void, Integer> task = new AsyncTask<Void, Void, Integer>() {
+            TTL<T> ttl;
+
             @Override
-            public boolean handleMessage(Message msg) {
-                TTL<T> ttl = (TTL<T>) msg.obj;
-                switch (msg.what) {
+            protected Integer doInBackground(Void... params) {
+                Integer toRet;
+                if (containsKey(key)) {
+                    ttl = getPrefser(key).get(key, typeToken, new TTL<T>(null));
+                    if (ttl.getData() == null) {
+                        toRet = MESSAGE_NO_DISK;
+                    } else {
+                        toRet = MESSAGE_GET_DATA;
+                    }
+                } else {
+                    toRet = MESSAGE_NO_DISK;
+                }
+
+                return toRet;
+            }
+
+            @Override
+            protected void onPostExecute(Integer integer) {
+                super.onPostExecute(integer);
+                switch (integer) {
                     case MESSAGE_NO_DISK:
                         listener.onNoDiskDataFound(key);
                         break;
@@ -50,36 +63,8 @@ public class DiskCache {
                     default:
                         break;
                 }
-                weakHandler = null;
-                return true;
             }
-        });
-
-        Thread t = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                Looper.prepare();
-                if (containsKey(key)) {
-                    TTL<T> data = getPrefser(key).get(key, typeToken, new TTL<T>(null));
-                    if (data.getData() == null) {
-                        Message completedMessage = weakHandler.obtainMessage(MESSAGE_NO_DISK);
-                        completedMessage.sendToTarget();
-                        //listener.onNoDiskDataFound(key);
-                    } else {
-                        Message completedMessage = weakHandler.obtainMessage(MESSAGE_GET_DATA, data);
-                        completedMessage.sendToTarget();
-//                        listener.onDiskDataRetrieved(key, (T) data.getData(), data.isAlive());
-                    }
-                } else {
-                    Message completedMessage = weakHandler.obtainMessage(MESSAGE_NO_DISK);
-                    completedMessage.sendToTarget();
-                    //listener.onNoDiskDataFound(key);
-                }
-                Looper.loop();
-
-            }
-        });
-        t.start();
+        }.execute();
     }
 
     private Prefser getPrefser() {

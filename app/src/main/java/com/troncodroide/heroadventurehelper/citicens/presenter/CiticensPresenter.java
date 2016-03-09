@@ -87,4 +87,7 @@ public class CiticensPresenter extends BasePresenter implements CiticensInteract
 
         void reloadCiticensChanges();
     }
+
+
 }
+

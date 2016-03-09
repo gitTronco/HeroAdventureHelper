@@ -16,12 +16,23 @@ public class NavigationManager extends Observable {
 
     private static NavigationManager navigationManager;
     public static final int TARGET_NO_TARGET = 0;
-    public static final int TARGET_HOME = 10;
     public static final int TARGET_TOWNS = 11;
     public static final int TARGET_CITICENS = 12;
     public static final String CLEAR_STACK = "clear";
     private static int current, before;
     public static final String TAG = "NavigationManager";
+
+
+    public static String getCurrentTargetName() {
+        switch (current) {
+            case TARGET_CITICENS:
+                return "CITICENS";
+            case TARGET_TOWNS:
+                return "TOWNS";
+            default:
+                return "TOWNS";
+        }
+    }
 
     public static Fragment goTo(FragmentManager fm, int target) {
         return goTo(fm, target, new Bundle());
@@ -39,9 +50,12 @@ public class NavigationManager extends Observable {
                         case TownsFragment.TAG:
                             current = TARGET_TOWNS;
                             break;
+                        case CiticensFragment.TAG:
+                            current = TARGET_CITICENS;
+                            break;
                     }
                 } else {
-                    current = TARGET_HOME;
+                    current = TARGET_TOWNS;
                 }
                 notifyChanges();
             }
@@ -64,12 +78,6 @@ public class NavigationManager extends Observable {
         }
 
         switch (target) {
-            case NavigationManager.TARGET_HOME: {
-
-                //toret = HomeItemFragment.newInstance();
-                ft.replace(R.id.frame, toret);
-                break;
-            }
 
             case NavigationManager.TARGET_TOWNS: {
                 Fragment f = fm.findFragmentByTag(TownsFragment.TAG);
@@ -79,7 +87,6 @@ public class NavigationManager extends Observable {
 
                     toret = TownsFragment.newInstance();
                     ft.replace(R.id.frame, toret, TownsFragment.TAG);
-                    ft.addToBackStack(TownsFragment.TAG);
                 }
 
                 break;
@@ -105,9 +112,6 @@ public class NavigationManager extends Observable {
         getNavigationManager().notifyObservers();
     }
 
-    public static boolean isHome() {
-        return (current == TARGET_HOME);
-    }
 
     public static int getPreviusTarget() {
         return before;

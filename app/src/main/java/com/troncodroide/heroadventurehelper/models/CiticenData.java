@@ -106,7 +106,9 @@ public class CiticenData {
     }
 
     public int getSatisfaction() {
-        return (100 * getHelped().size()) / professions.size();
+        if (professions.size() > 0)
+            return (100 * getHelped().size()) / professions.size();
+        else return 100;
     }
 
     private Prefser getPrefser() {

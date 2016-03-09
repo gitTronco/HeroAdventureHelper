@@ -1,5 +1,8 @@
 package com.troncodroide.heroadventurehelper.launch;
 
+import android.animation.ArgbEvaluator;
+import android.animation.ValueAnimator;
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -8,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.R;
+import com.troncodroide.heroadventurehelper.managers.LoadImageManager;
 import com.troncodroide.heroadventurehelper.models.HeroData;
 
 import java.util.List;
@@ -47,6 +51,7 @@ public class HerosListRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerV
         if (parentHolder != null) {
             final ViewHolder holder = (ViewHolder) parentHolder;
             holder.mItem = getItem(position);
+            LoadImageManager.loadImage(holder.mItem.getResImage(), holder.mImage);
             holder.mImage.setImageResource(holder.mItem.getResImage());
             holder.mName.setText(String.format("Name:%s", holder.mItem.getName()));
             holder.mLevel.setText(String.format("Level:%d", holder.mItem.getLevel()));

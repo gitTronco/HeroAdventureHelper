@@ -1,5 +1,6 @@
 package com.troncodroide.heroadventurehelper.citicens;
 
+import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
