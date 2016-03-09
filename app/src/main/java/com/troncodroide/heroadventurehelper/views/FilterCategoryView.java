@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -67,6 +68,7 @@ public class FilterCategoryView extends FrameLayout {
         View v = inflate(c, R.layout.item_filter_category_values, this);
         if (!isInEditMode()) {
             categoryview = new CategoriListBindView(v);
+
         }
     }
 
@@ -77,7 +79,7 @@ public class FilterCategoryView extends FrameLayout {
     public class CategoriListBindView {
 
         @Bind(R.id.filter_category_name)
-        public TextView mName;
+        public CheckBox mName;
         @Bind(R.id.filter_list_items)
         public ListView mList;
 
@@ -95,10 +97,9 @@ public class FilterCategoryView extends FrameLayout {
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
             if (convertView == null) {
-                FilterItemView view = (FilterItemView) LayoutInflater.from(getContext()).inflate(R.layout.item_list_filter_value, null);
-                convertView = view;
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.item_list_filter_value, null);
             }
-            ((FilterItemView)convertView).setData(getItem(position));
+            ((FilterItemView) convertView).setData(getItem(position));
             return convertView;
         }
     }

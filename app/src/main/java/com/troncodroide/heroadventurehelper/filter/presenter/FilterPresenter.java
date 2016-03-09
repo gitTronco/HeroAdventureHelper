@@ -16,7 +16,7 @@ import java.util.List;
 public class FilterPresenter extends BasePresenter implements FilterInteractor.FilterListener {
 
     FilterInteractor _interactor;
-    private List<FilterCategory> filters;
+    private static List<FilterCategory> filters;
 
     public FilterPresenter(FilterPresenterInterface listener) {
         super(listener);
@@ -52,7 +52,19 @@ public class FilterPresenter extends BasePresenter implements FilterInteractor.F
     @Override
     public void onGetFiltersSuccess(List<FilterCategory> items) {
         stopLoading();
+        filters = items;
         ((FilterPresenterInterface) _listener).onFilterSuccess(items);
+    }
+
+    public List<FilterCategory> getCacheFilters() {
+        return filters;
+    }
+
+    public void clearFIlters() {
+        for (FilterCategory filter : filters) {
+            filter.clearFilter();
+        }
+        onGetFiltersSuccess(filters);
     }
 
     public static class FilterCategory {
@@ -106,6 +118,12 @@ public class FilterPresenter extends BasePresenter implements FilterInteractor.F
 
         public int getType() {
             return type;
+        }
+
+        public void clearFilter() {
+            for (FilterValue fv : values) {
+                fv.clear();
+            }
         }
     }
 

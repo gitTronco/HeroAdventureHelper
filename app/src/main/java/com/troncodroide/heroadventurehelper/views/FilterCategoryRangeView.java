@@ -7,12 +7,15 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.SeekBar;
+import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterCategory;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterValueRanged;
+
+import org.w3c.dom.Text;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -48,9 +51,12 @@ public class FilterCategoryRangeView extends FrameLayout {
         this.itemBindView.mFilterItem.setText(data.getName());
         this.itemBindView.mSeekBarFrom.setMax(data.getMax());
         this.itemBindView.mSeekBarTo.setMax(data.getMax());
+        this.itemBindView.mSeekBarFrom.setProgress(data.getMin());
+        this.itemBindView.mSeekBarTo.setProgress(data.getMax());
         this.itemBindView.mSeekBarFrom.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                itemBindView.mTextFrom.setText("To:" + progress);
                 if (progress >= data.getSelectedMax()) ;
                 {
                     seekBar.setProgress(data.getSelectedMax());
@@ -70,11 +76,13 @@ public class FilterCategoryRangeView extends FrameLayout {
         this.itemBindView.mSeekBarTo.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
+                itemBindView.mTextTo.setText("To:" + progress);
                 if (progress <= data.getSelectedMin()) ;
                 {
                     seekBar.setProgress(data.getSelectedMin());
                 }
                 data.setSelectedMax(progress);
+
             }
 
             @Override
@@ -87,29 +95,23 @@ public class FilterCategoryRangeView extends FrameLayout {
         });
     }
 
-    public void toggle() {
-        this.itemBindView.mFilterItem.toggle();
-    }
-
     private void _init(Context c) {
         View v = inflate(c, R.layout.item_filter_category_range, this);
         if (!isInEditMode()) {
             itemBindView = new FilterItemBindView(v);
-            itemBindView.mFilterItem.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-                @Override
-                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                    rangedValue.setSelected(isChecked);
-                    itemBindView.mSeekBarFrom.setEnabled(isChecked);
-                    itemBindView.mSeekBarTo.setEnabled(isChecked);
-                }
-            });
         }
     }
 
     public class FilterItemBindView {
 
         @Bind(R.id.filter_value_item)
-        public CheckBox mFilterItem;
+        public TextView mFilterItem;
+
+        @Bind(R.id.filter_value_item_from)
+        public TextView mTextFrom;
+
+        @Bind(R.id.filter_value_item_to)
+        public TextView mTextTo;
 
         @Bind(R.id.seekBar_from)
         public SeekBar mSeekBarFrom;

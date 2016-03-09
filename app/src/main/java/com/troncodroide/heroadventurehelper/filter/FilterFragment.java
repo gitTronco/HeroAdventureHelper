@@ -8,12 +8,17 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Switch;
 
 import com.troncodroide.heroadventurehelper.Base.BaseDialogFragment;
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 
 import java.util.List;
+
+import butterknife.Bind;
+import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 /**
  * Created by Tronco on 08/03/2016.
@@ -22,11 +27,48 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
 
     public static final String TAG = "FilterFragment";
 
-    RecyclerView recyclerView;
-
     FilterPresenter presenter;
 
     String town;
+
+    FragmentFilterListener _listener;
+
+    @Bind(R.id.recycler)
+    RecyclerView recyclerView;
+
+    @OnClick({R.id.filter_apply, R.id.filter_cancel, R.id.filter_clear})
+    public void onClick(View v) {
+        switch (v.getId()) {
+            case R.id.filter_apply:
+                applyFilters();
+                break;
+            case R.id.filter_cancel:
+                dismiss();
+                break;
+            case R.id.filter_clear:
+                clearFilters();
+                break;
+        }
+    }
+
+    private void clearFilters() {
+        presenter.clearFIlters();
+    }
+
+    private void applyFilters() {
+        if (_listener != null) {
+            _listener.onFilterItems(presenter.getCacheFilters());
+        }
+        dismiss();
+    }
+
+    public void setListener(FragmentFilterListener listener) {
+        this._listener = listener;
+    }
+
+    public interface FragmentFilterListener {
+        void onFilterItems(List<FilterPresenter.FilterCategory> list);
+    }
 
     public FilterFragment() {
     }
@@ -50,10 +92,11 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_filter, container, false);
+        View view = inflater.inflate(R.layout.fragment_filter, container, false);
+        ButterKnife.bind(this, view);
         presenter = new FilterPresenter(this);
         presenter.getFilters(town);
-        return recyclerView;
+        return view;
     }
 
     @NonNull

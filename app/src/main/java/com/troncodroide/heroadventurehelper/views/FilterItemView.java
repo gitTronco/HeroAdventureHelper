@@ -42,6 +42,7 @@ public class FilterItemView extends FrameLayout {
 
     private void loadData(FilterValue data) {
         this.itemBindView.mFilterItem.setText(data.getName());
+        this.itemBindView.mFilterItem.setSelected(data.isSelected());
     }
 
     public void toggle() {
