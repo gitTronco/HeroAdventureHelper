@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.troncodroide.heroadventurehelper.Base.BaseFragment;
 import com.troncodroide.heroadventurehelper.R;
+import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.managers.NavigationManager;
 import com.troncodroide.heroadventurehelper.models.TownData;
 import com.troncodroide.heroadventurehelper.towns.presenter.TownPresenter;
@@ -66,6 +67,7 @@ public class TownsFragment extends BaseFragment implements TownPresenter.LaunchP
             public void onItemClick(TownData data) {
                 Bundle b = new Bundle();
                 b.putString("data", data.getName());
+                ConfigurationManager.setCurrentTown(data.getName());
                 NavigationManager.goTo(getFragmentManager(), NavigationManager.TARGET_CITICENS, b);
             }
         }));

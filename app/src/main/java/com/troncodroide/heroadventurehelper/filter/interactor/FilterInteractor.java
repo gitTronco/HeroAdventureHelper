@@ -1,9 +1,13 @@
 package com.troncodroide.heroadventurehelper.filter.interactor;
 
+import android.os.AsyncTask;
+
 import com.troncodroide.heroadventurehelper.Base.interfaces.ErrorListener;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterCategory;
 import com.troncodroide.heroadventurehelper.models.CiticenData;
 import com.troncodroide.heroadventurehelper.repository.Repository;
+import com.troncodroide.heroadventurehelper.repository.api.TTL;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
 import com.troncodroide.heroadventurehelper.repository.request.BaseRequest;
@@ -16,14 +20,32 @@ import java.util.List;
 public class FilterInteractor {
 
     public interface FilterListener extends ErrorListener {
-        void onGetFiltersSuccess(List<FilterPresenter.FilterCategory> items);
+        void onGetFiltersSuccess(List<FilterCategory> items);
     }
 
     public void getFiltersCiticens(String town, final FilterListener listener) {
         Repository.TOWN.getCiticens(new BaseRequest<>(new GetCiticensRequest(town)), new Response.Listener<GetCiticensResponse>() {
             @Override
-            public void onSuccess(GetCiticensResponse data, boolean hideLoading) {
-                listener.onGetFiltersSuccess(validateAndTrasnformCiticenData(data.getData()));
+            public void onSuccess(final GetCiticensResponse data, boolean hideLoading) {
+
+
+                new AsyncTask<Void, Void, Void>() {
+                    List<FilterCategory> filters;
+
+                    @Override
+                    protected Void doInBackground(Void... params) {
+                        filters = validateAndTrasnformCiticenData(data.getData());
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void voidd) {
+                        super.onPostExecute(voidd);
+                        listener.onGetFiltersSuccess(filters);
+
+                    }
+                }.execute();
+
             }
 
             @Override
@@ -31,13 +53,13 @@ public class FilterInteractor {
                 listener.onError(data.getErrorCode(), data.toString());
             }
 
-            private List<FilterPresenter.FilterCategory> validateAndTrasnformCiticenData(List<CiticenDataRepository> list) {
-                List<CiticenData> toRet = new LinkedList<CiticenData>();
-                FilterPresenter.FilterCategory hairCategory = new FilterPresenter.FilterCategory();
-                FilterPresenter.FilterCategory ageCategory = new FilterPresenter.FilterCategory();
-                FilterPresenter.FilterCategory weightCategory = new FilterPresenter.FilterCategory();
-                FilterPresenter.FilterCategory heightCategory = new FilterPresenter.FilterCategory();
-                FilterPresenter.FilterCategory profesionsCategory = new FilterPresenter.FilterCategory();
+            private List<FilterCategory> validateAndTrasnformCiticenData(List<CiticenDataRepository> list) {
+
+                FilterCategory hairCategory = new FilterCategory(FilterCategory.TYPE_VALUES, "HAIR");
+                FilterCategory ageCategory = new FilterCategory(FilterCategory.TYPE_RANGED, "AGE");
+                FilterCategory weightCategory = new FilterCategory(FilterCategory.TYPE_RANGED, "WEIGHT");
+                FilterCategory heightCategory = new FilterCategory(FilterCategory.TYPE_RANGED, "HEIGHT");
+                FilterCategory profesionsCategory = new FilterCategory(FilterCategory.TYPE_VALUES, "PROFESIONS");
                 for (CiticenDataRepository data : list) {
                     hairCategory.addValue(new FilterPresenter.FilterValue(data.getHair_color()));
                     ageCategory.addValue(new FilterPresenter.FilterValue("" + data.getAge()));
@@ -46,9 +68,8 @@ public class FilterInteractor {
                     for (String profesion : data.getProfessions()) {
                         profesionsCategory.addValue(new FilterPresenter.FilterValue(profesion));
                     }
-
                 }
-                List<FilterPresenter.FilterCategory> listCategories = new LinkedList<FilterPresenter.FilterCategory>();
+                List<FilterCategory> listCategories = new LinkedList<FilterCategory>();
                 listCategories.add(hairCategory);
                 listCategories.add(ageCategory);
                 listCategories.add(weightCategory);
@@ -59,4 +80,3 @@ public class FilterInteractor {
         });
     }
 }
-

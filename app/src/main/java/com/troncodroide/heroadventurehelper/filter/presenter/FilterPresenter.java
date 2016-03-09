@@ -56,8 +56,16 @@ public class FilterPresenter extends BasePresenter implements FilterInteractor.F
     }
 
     public static class FilterCategory {
+        public static final int TYPE_RANGED = 1;
+        public static final int TYPE_VALUES = 2;
         String name;
         List<FilterValue> values;
+        private int type;
+
+        public FilterCategory(int type, String name) {
+            this.type = type;
+            this.name = name;
+        }
 
         public String getName() {
             return name;
@@ -77,7 +85,6 @@ public class FilterPresenter extends BasePresenter implements FilterInteractor.F
             }
         }
 
-
         public List<FilterValue> getValues() {
             return values;
         }
@@ -86,7 +93,7 @@ public class FilterPresenter extends BasePresenter implements FilterInteractor.F
             int min = 0;
             int max = 0;
             for (FilterValue item : values) {
-                int value = Integer.parseInt(item.getName());
+                int value = (int) Float.parseFloat(item.getName());
                 min = (min <= value) ? min : value;
                 max = (max >= value) ? max : value;
             }
@@ -95,6 +102,10 @@ public class FilterPresenter extends BasePresenter implements FilterInteractor.F
             rangued.setSelectedMin(min);
             rangued.setSelectedMax(max);
             return rangued;
+        }
+
+        public int getType() {
+            return type;
         }
     }
 

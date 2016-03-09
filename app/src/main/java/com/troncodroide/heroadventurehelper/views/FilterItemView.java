@@ -9,6 +9,8 @@ import android.widget.FrameLayout;
 
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterValue;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -16,7 +18,7 @@ import butterknife.ButterKnife;
 public class FilterItemView extends FrameLayout {
 
     private FilterItemBindView itemBindView;
-    private CiticensPresenter.FilterValue data;
+    private FilterValue data;
 
     public FilterItemView(Context context) {
         super(context);
@@ -33,12 +35,12 @@ public class FilterItemView extends FrameLayout {
         _init(context);
     }
 
-    public void setData(CiticensPresenter.FilterValue data) {
+    public void setData(FilterValue data) {
         this.data = data;
         loadData(data);
     }
 
-    private void loadData(CiticensPresenter.FilterValue data) {
+    private void loadData(FilterValue data) {
         this.itemBindView.mFilterItem.setText(data.getName());
     }
 

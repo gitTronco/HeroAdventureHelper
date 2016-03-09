@@ -10,6 +10,9 @@ import android.widget.SeekBar;
 
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterCategory;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterValueRanged;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -17,8 +20,8 @@ import butterknife.ButterKnife;
 public class FilterCategoryRangeView extends FrameLayout {
 
     private FilterItemBindView itemBindView;
-    private CiticensPresenter.FilterCategory data;
-    private CiticensPresenter.FilterValueRanged rangedValue;
+    private FilterCategory data;
+    private FilterValueRanged rangedValue;
 
     public FilterCategoryRangeView(Context context) {
         super(context);
@@ -35,13 +38,13 @@ public class FilterCategoryRangeView extends FrameLayout {
         _init(context);
     }
 
-    public void setData(CiticensPresenter.FilterCategory data) {
+    public void setData(FilterCategory data) {
         this.data = data;
         rangedValue = data.getRangedValue();
         loadData(rangedValue);
     }
 
-    private void loadData(final CiticensPresenter.FilterValueRanged data) {
+    private void loadData(final FilterValueRanged data) {
         this.itemBindView.mFilterItem.setText(data.getName());
         this.itemBindView.mSeekBarFrom.setMax(data.getMax());
         this.itemBindView.mSeekBarTo.setMax(data.getMax());

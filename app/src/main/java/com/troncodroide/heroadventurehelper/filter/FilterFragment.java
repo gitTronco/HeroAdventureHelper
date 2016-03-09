@@ -22,7 +22,7 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
 
     public static final String TAG = "FilterFragment";
 
-    RecyclerView reciclerView;
+    RecyclerView recyclerView;
 
     FilterPresenter presenter;
 
@@ -50,16 +50,18 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        reciclerView = (RecyclerView) inflater.inflate(R.layout.fragment_citicens, container, false);
+        recyclerView = (RecyclerView) inflater.inflate(R.layout.fragment_filter, container, false);
         presenter = new FilterPresenter(this);
         presenter.getFilters(town);
-        return reciclerView;
+        return recyclerView;
     }
 
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        return super.onCreateDialog(savedInstanceState);
+        Dialog d = super.onCreateDialog(savedInstanceState);
+        d.setTitle("FILTERS");
+        return d;
     }
 
     @Override
@@ -79,6 +81,7 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
 
     @Override
     public void onFilterSuccess(List<FilterPresenter.FilterCategory> item) {
-
+        recyclerView.setLayoutManager(new LinearLayoutManager(_context));
+        recyclerView.setAdapter(new FilterRecyclerAdapter(item));
     }
 }

@@ -4,11 +4,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/rounded_border"
-    android:orientation="horizontal"
-    android:padding="@dimen/text_padding">
+    android:orientation="horizontal">
 
     <com.troncodroide.heroadventurehelper.views.TypefacedCheckBOx
         android:id="@+id/filter_value_item"
         style="@style/text_normal"
+        android:padding="@dimen/text_padding"
+        android:gravity="center"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
         android:text="-" />
 </LinearLayout>

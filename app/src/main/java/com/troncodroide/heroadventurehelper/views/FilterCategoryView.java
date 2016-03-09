@@ -2,6 +2,7 @@ package com.troncodroide.heroadventurehelper.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -11,6 +12,9 @@ import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterCategory;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterValue;
 
 import java.util.List;
 
@@ -23,7 +27,7 @@ import butterknife.ButterKnife;
 
 public class FilterCategoryView extends FrameLayout {
 
-    private CiticensPresenter.FilterCategory category;
+    private FilterCategory category;
     private CategoryFilterCardInteractor _listener;
     private CategoriListBindView categoryview;
 
@@ -42,7 +46,7 @@ public class FilterCategoryView extends FrameLayout {
         _init(context);
     }
 
-    public void setData(CiticensPresenter.FilterCategory data) {
+    public void setData(FilterCategory data) {
         this.category = data;
         loadData();
     }
@@ -82,17 +86,20 @@ public class FilterCategoryView extends FrameLayout {
         }
     }
 
-    private class FilterValueAdapter extends ArrayAdapter<CiticensPresenter.FilterValue> {
+    private class FilterValueAdapter extends ArrayAdapter<FilterValue> {
 
-        public FilterValueAdapter(Context context, List<CiticensPresenter.FilterValue> objects) {
-            super(context, R.layout.item_list_filter_value, objects);
+        public FilterValueAdapter(Context context, List<FilterValue> objects) {
+            super(context, R.layout.list_item_text, objects);
         }
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            FilterItemView view = (FilterItemView) super.getView(position, convertView, parent);
-            view.setData(getItem(position));
-            return view;
+            if (convertView == null) {
+                FilterItemView view = (FilterItemView) LayoutInflater.from(getContext()).inflate(R.layout.item_list_filter_value, null);
+                convertView = view;
+            }
+            ((FilterItemView)convertView).setData(getItem(position));
+            return convertView;
         }
     }
 }

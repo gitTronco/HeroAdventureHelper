@@ -16,6 +16,8 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.Base.BaseActivity;
+import com.troncodroide.heroadventurehelper.filter.FilterFragment;
+import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.managers.NavigationManager;
 
 import java.util.Observable;
@@ -82,6 +84,7 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filter) {
+            FilterFragment.newInstance(ConfigurationManager.getCurrentTown()).show(getSupportFragmentManager(), FilterFragment.TAG);
             //TODO populate filter dialog
             return true;
         }
