@@ -5,6 +5,7 @@ import android.content.Context;
 import com.github.pwittchen.prefser.library.Prefser;
 import com.github.pwittchen.prefser.library.TypeToken;
 import com.troncodroide.heroadventurehelper.APP;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -127,4 +128,5 @@ public class CiticenData {
         };
         helped = getPrefser().get("helped", typetoken, new HashMap<String, Integer>());
     }
+
 }

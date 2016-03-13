@@ -6,7 +6,7 @@
     android:orientation="vertical"
     android:padding="@dimen/text_padding">
 
-    <com.troncodroide.heroadventurehelper.views.TypefacedTextView
+    <com.troncodroide.heroadventurehelper.views.TypefacedCheckBOx
         android:id="@+id/filter_value_item"
         style="@style/text_normal"
         android:text="-" />

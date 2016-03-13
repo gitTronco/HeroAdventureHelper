@@ -3,11 +3,10 @@ package com.troncodroide.heroadventurehelper.filter.interactor;
 import android.os.AsyncTask;
 
 import com.troncodroide.heroadventurehelper.Base.interfaces.ErrorListener;
+import com.troncodroide.heroadventurehelper.filter.models.FilterCategory;
+import com.troncodroide.heroadventurehelper.filter.models.FilterValue;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterCategory;
-import com.troncodroide.heroadventurehelper.models.CiticenData;
 import com.troncodroide.heroadventurehelper.repository.Repository;
-import com.troncodroide.heroadventurehelper.repository.api.TTL;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
 import com.troncodroide.heroadventurehelper.repository.request.BaseRequest;
@@ -28,7 +27,6 @@ public class FilterInteractor {
             @Override
             public void onSuccess(final GetCiticensResponse data, boolean hideLoading) {
 
-
                 new AsyncTask<Void, Void, Void>() {
                     List<FilterCategory> filters;
 
@@ -42,10 +40,8 @@ public class FilterInteractor {
                     protected void onPostExecute(Void voidd) {
                         super.onPostExecute(voidd);
                         listener.onGetFiltersSuccess(filters);
-
                     }
                 }.execute();
-
             }
 
             @Override
@@ -55,18 +51,18 @@ public class FilterInteractor {
 
             private List<FilterCategory> validateAndTrasnformCiticenData(List<CiticenDataRepository> list) {
 
-                FilterCategory hairCategory = new FilterCategory(FilterCategory.TYPE_VALUES, "HAIR");
-                FilterCategory ageCategory = new FilterCategory(FilterCategory.TYPE_RANGED, "AGE");
-                FilterCategory weightCategory = new FilterCategory(FilterCategory.TYPE_RANGED, "WEIGHT");
-                FilterCategory heightCategory = new FilterCategory(FilterCategory.TYPE_RANGED, "HEIGHT");
-                FilterCategory profesionsCategory = new FilterCategory(FilterCategory.TYPE_VALUES, "PROFESIONS");
+                FilterCategory hairCategory = new FilterCategory(FilterCategory.TYPE_HAIR | FilterCategory.TYPE_VALUES, "HAIR");
+                FilterCategory ageCategory = new FilterCategory(FilterCategory.TYPE_AGE | FilterCategory.TYPE_RANGED, "AGE");
+                FilterCategory weightCategory = new FilterCategory(FilterCategory.TYPE_WEIGHT | FilterCategory.TYPE_RANGED, "WEIGHT");
+                FilterCategory heightCategory = new FilterCategory(FilterCategory.TYPE_HEIGHT | FilterCategory.TYPE_RANGED, "HEIGHT");
+                FilterCategory profesionsCategory = new FilterCategory(FilterCategory.TYPE_PROFESION | FilterCategory.TYPE_VALUES, "PROFESIONS");
                 for (CiticenDataRepository data : list) {
-                    hairCategory.addValue(new FilterPresenter.FilterValue(data.getHair_color()));
-                    ageCategory.addValue(new FilterPresenter.FilterValue("" + data.getAge()));
-                    weightCategory.addValue(new FilterPresenter.FilterValue("" + data.getWeight()));
-                    heightCategory.addValue(new FilterPresenter.FilterValue("" + data.getHeight()));
+                    hairCategory.addValue(new FilterValue(data.getHair_color()));
+                    ageCategory.addValue(new FilterValue("" + data.getAge()));
+                    weightCategory.addValue(new FilterValue("" + data.getWeight()));
+                    heightCategory.addValue(new FilterValue("" + data.getHeight()));
                     for (String profesion : data.getProfessions()) {
-                        profesionsCategory.addValue(new FilterPresenter.FilterValue(profesion));
+                        profesionsCategory.addValue(new FilterValue(profesion));
                     }
                 }
                 List<FilterCategory> listCategories = new LinkedList<FilterCategory>();

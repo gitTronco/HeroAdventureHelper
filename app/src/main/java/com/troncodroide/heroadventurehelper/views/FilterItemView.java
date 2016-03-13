@@ -2,15 +2,15 @@ package com.troncodroide.heroadventurehelper.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 
 import com.troncodroide.heroadventurehelper.R;
-import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterValue;
+import com.troncodroide.heroadventurehelper.filter.models.FilterValue;
+import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -42,12 +42,9 @@ public class FilterItemView extends FrameLayout {
 
     private void loadData(FilterValue data) {
         this.itemBindView.mFilterItem.setText(data.getName());
-        this.itemBindView.mFilterItem.setSelected(data.isSelected());
+        this.itemBindView.mFilterItem.setChecked(data.isSelected());
     }
 
-    public void toggle() {
-        this.itemBindView.mFilterItem.toggle();
-    }
 
     private void _init(Context c) {
         View v = inflate(c, R.layout.item_filter_value, this);
@@ -57,6 +54,7 @@ public class FilterItemView extends FrameLayout {
                 @Override
                 public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                     data.setSelected(isChecked);
+                    ConfigurationManager.getSelectedFilters().updateSelected(data);
                 }
             });
         }

@@ -8,10 +8,11 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Switch;
+import android.view.Window;
 
 import com.troncodroide.heroadventurehelper.Base.BaseDialogFragment;
 import com.troncodroide.heroadventurehelper.R;
+import com.troncodroide.heroadventurehelper.filter.models.FilterCategory;
 import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 
 import java.util.List;
@@ -52,12 +53,13 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
     }
 
     private void clearFilters() {
-        presenter.clearFIlters();
+        presenter.clearFilters();
     }
 
     private void applyFilters() {
         if (_listener != null) {
-            _listener.onFilterItems(presenter.getCacheFilters());
+            presenter.evaluateFilters();
+            _listener.applyFilters();
         }
         dismiss();
     }
@@ -67,7 +69,7 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
     }
 
     public interface FragmentFilterListener {
-        void onFilterItems(List<FilterPresenter.FilterCategory> list);
+        void applyFilters();
     }
 
     public FilterFragment() {
@@ -102,9 +104,10 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        Dialog d = super.onCreateDialog(savedInstanceState);
-        d.setTitle("FILTERS");
-        return d;
+        Dialog dialog = super.onCreateDialog(savedInstanceState);
+        dialog.requestWindowFeature(Window.FEATURE_NO_TITLE); //before
+
+        return dialog;
     }
 
     @Override
@@ -123,7 +126,7 @@ public class FilterFragment extends BaseDialogFragment implements FilterPresente
     }
 
     @Override
-    public void onFilterSuccess(List<FilterPresenter.FilterCategory> item) {
+    public void onGetFilterSuccess(List<FilterCategory> item) {
         recyclerView.setLayoutManager(new LinearLayoutManager(_context));
         recyclerView.setAdapter(new FilterRecyclerAdapter(item));
     }

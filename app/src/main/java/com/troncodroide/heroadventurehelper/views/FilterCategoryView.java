@@ -2,20 +2,18 @@ package com.troncodroide.heroadventurehelper.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.CheckBox;
 import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.R;
-import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterCategory;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.FilterValue;
+import com.troncodroide.heroadventurehelper.filter.models.FilterCategory;
+import com.troncodroide.heroadventurehelper.filter.models.FilterValue;
 
 import java.util.List;
 
@@ -59,7 +57,6 @@ public class FilterCategoryView extends FrameLayout {
         }
     }
 
-
     public void setListener(CategoryFilterCardInteractor listener) {
         this._listener = listener;
     }
@@ -79,7 +76,7 @@ public class FilterCategoryView extends FrameLayout {
     public class CategoriListBindView {
 
         @Bind(R.id.filter_category_name)
-        public CheckBox mName;
+        public TextView mName;
         @Bind(R.id.filter_list_items)
         public ListView mList;
 

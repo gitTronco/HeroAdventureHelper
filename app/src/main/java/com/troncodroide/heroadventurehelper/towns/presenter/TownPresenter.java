@@ -40,8 +40,8 @@ public class TownPresenter extends BasePresenter implements TownInteractor.Towns
 
     @Override
     public void onGetTownsSuccess(List<TownData> items) {
-        stopLoading();
         ((LaunchPresenterInterface) _listener).onTownsSuccess(items);
+        stopLoading();
 
     }
 

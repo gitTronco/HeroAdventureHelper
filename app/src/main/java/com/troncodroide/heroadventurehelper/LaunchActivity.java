@@ -55,6 +55,7 @@ public class LaunchActivity extends BaseActivity implements LaunchPresenter.Laun
                 HeroManager.openHeroSession(heroData);
                 startActivity(new Intent(LaunchActivity.this, MainActivity.class));
                 overridePendingTransition(R.anim.slide_in_right,R.anim.slide_out_left);
+
             }
         }));
     }

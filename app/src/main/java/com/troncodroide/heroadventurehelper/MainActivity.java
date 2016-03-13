@@ -16,10 +16,16 @@ import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.Base.BaseActivity;
+import com.troncodroide.heroadventurehelper.Base.interfaces.ToolbarInterface;
+import com.troncodroide.heroadventurehelper.citicens.CiticensFragment;
 import com.troncodroide.heroadventurehelper.filter.FilterFragment;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.managers.NavigationManager;
+import com.troncodroide.heroadventurehelper.views.ProgressView;
+import com.troncodroide.heroadventurehelper.views.ProgressViewInterface;
 
+import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -27,10 +33,12 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 
 public class MainActivity extends BaseActivity
-        implements NavigationView.OnNavigationItemSelectedListener, Observer {
+        implements NavigationView.OnNavigationItemSelectedListener, Observer, ProgressViewInterface {
 
     @Bind(R.id.toolbar_title)
     TextView toolbarTitle;
+    @Bind(R.id.toolbar_progress)
+    ProgressView toolbarProgress;
     private Toolbar toolbar;
 
     @Override
@@ -84,8 +92,16 @@ public class MainActivity extends BaseActivity
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_filter) {
-            FilterFragment.newInstance(ConfigurationManager.getCurrentTown()).show(getSupportFragmentManager(), FilterFragment.TAG);
-            //TODO populate filter dialog
+            final FilterFragment fragment = FilterFragment.newInstance(ConfigurationManager.getCurrentTown());
+            fragment.show(getSupportFragmentManager(), FilterFragment.TAG);
+            fragment.setListener(new FilterFragment.FragmentFilterListener() {
+                @Override
+                public void applyFilters() {
+                    CiticensFragment fragment1 = (CiticensFragment) getSupportFragmentManager().findFragmentByTag(CiticensFragment.TAG);
+                    if (fragment1 != null)
+                        fragment1.filter();
+                }
+            });
             return true;
         }
 
@@ -129,6 +145,49 @@ public class MainActivity extends BaseActivity
             } else {
                 toolbar.inflateMenu(R.menu.main);
             }
+        }
+    }
+
+    @Override
+    public void setTitle(String title) {
+        if (toolbarProgress != null) {
+            toolbarProgress.setTitle(title);
+        }
+    }
+
+    @Override
+    public void setMessage(String message) {
+        if (toolbarProgress != null) {
+            toolbarProgress.setMessage(message);
+        }
+    }
+
+    @Override
+    public void setProgressView(int progress) {
+        if (toolbarProgress != null) {
+            toolbarProgress.setProgressView(progress);
+        }
+    }
+
+    @Override
+    public void setMax(int maxProgress) {
+
+        if (toolbarProgress != null) {
+            toolbarProgress.setMax(maxProgress);
+        }
+    }
+
+    @Override
+    public void show() {
+        if (toolbarProgress != null) {
+            toolbarProgress.show();
+        }
+    }
+
+    @Override
+    public void hide() {
+        if (toolbarProgress != null) {
+            toolbarProgress.hide();
         }
     }
 }

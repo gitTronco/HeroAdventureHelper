@@ -1,5 +1,6 @@
 package com.troncodroide.heroadventurehelper.citicens;
 
+import android.app.Activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,16 +11,22 @@ import android.view.ViewGroup;
 import com.troncodroide.heroadventurehelper.Base.BaseFragment;
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
+import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.SelectedFilters;
+import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.models.CiticenData;
 import com.troncodroide.heroadventurehelper.models.TownData;
+import com.troncodroide.heroadventurehelper.views.ProgressView;
+import com.troncodroide.heroadventurehelper.views.ProgressViewInterface;
 
+import java.util.LinkedList;
 import java.util.List;
 
 public class CiticensFragment extends BaseFragment implements CiticensPresenter.CiticensPresenterInterface {
     public static final String TAG = "CiticensFragment";
 
     RecyclerView reciclerView;
-
+    ProgressViewInterface progressView;
     CiticensPresenter presenter;
     private String town;
 
@@ -67,10 +74,22 @@ public class CiticensFragment extends BaseFragment implements CiticensPresenter.
         showMessage(name);
     }
 
+    List<CiticenData> citicenfilters = new LinkedList<>();
+
+    @Override
+    public synchronized void onCiticenSuccess(CiticenData item) {
+        if (citicenfilters.size() == 0) {
+            onCiticensSuccess(citicenfilters);
+        }
+        citicenfilters.add(item);
+        reciclerView.getAdapter().notifyDataSetChanged();
+    }
+
     @Override
     public void onCiticensSuccess(List<CiticenData> items) {
+        citicenfilters = items;
         reciclerView.setLayoutManager(new LinearLayoutManager(_context, LinearLayoutManager.VERTICAL, false));
-        reciclerView.setAdapter(new CiticensCardListViewAdapter(items, new CiticensCardListViewAdapter.CiticensListListener() {
+        reciclerView.setAdapter(new CiticensCardListViewAdapter(citicenfilters, new CiticensCardListViewAdapter.CiticensListListener() {
             @Override
             public void onItemClick(CiticenData data) {
                 presenter.help(data);
@@ -91,11 +110,39 @@ public class CiticensFragment extends BaseFragment implements CiticensPresenter.
     @Override
     public void scrollToCiticenPosition(int position) {
         reciclerView.getLayoutManager().scrollToPosition(position);
+    }
 
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        progressView = (ProgressViewInterface) activity;
     }
 
     @Override
     public void reloadCiticensChanges() {
         reciclerView.getAdapter().notifyDataSetChanged();
+    }
+
+    public void filter() {
+        presenter.filter(ConfigurationManager.getSelectedFilters());
+    }
+
+    @Override
+    public void stopFiltering() {
+        progressView.hide();
+    }
+
+    @Override
+    public void progressFiltering(int progress, String message) {
+        progressView.setMessage(message);
+        progressView.setProgressView(progress);
+    }
+
+    @Override
+    public void startFiltering(String title, String message, int max) {
+        progressView.setTitle(title);
+        progressView.setMessage(message);
+        progressView.setMax(max);
+        progressView.show();
     }
 }
