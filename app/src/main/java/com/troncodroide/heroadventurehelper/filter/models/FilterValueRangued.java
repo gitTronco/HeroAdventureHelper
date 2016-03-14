@@ -1,8 +1,8 @@
 package com.troncodroide.heroadventurehelper.filter.models;
 
 public class FilterValueRangued extends FilterValue {
-    int min, max;
-    int selectedMin, selectedMax;
+    private int min, max;
+    private int selectedMin, selectedMax;
 
     public FilterValueRangued(String name, int min, int max) {
         super(name);

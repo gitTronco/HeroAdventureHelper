@@ -8,6 +8,9 @@ import android.view.inputmethod.InputMethodManager;
 
 import com.troncodroide.heroadventurehelper.APP;
 
+/**
+ * Base Fragment responsible for saving the context, show and hide mistakes and loading processes
+ */
 public class BaseFragment extends Fragment {
 
     protected Context _context;

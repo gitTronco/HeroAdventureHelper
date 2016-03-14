@@ -8,10 +8,9 @@ public class TTL<T> {
     public static final long TTL_1MONTH = TTL_1DAY * 30;
     public static final long DEFAULT_TTL = TTL_1MINUTE * 10;
 
-    long born = System.currentTimeMillis();
-
-    long ttl;
-    T data;
+    private long born = System.currentTimeMillis();
+    private long ttl;
+    private T data;
 
     public TTL(T data) {
         this(DEFAULT_TTL, data);

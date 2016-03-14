@@ -7,7 +7,7 @@ import com.troncodroide.heroadventurehelper.models.HeroData;
 import com.troncodroide.heroadventurehelper.repository.api.TTL;
 import com.troncodroide.heroadventurehelper.repository.api.cache.DiskCache;
 import com.troncodroide.heroadventurehelper.repository.api.cache.MemCache;
-import com.troncodroide.heroadventurehelper.repository.api.net.API;
+import com.troncodroide.heroadventurehelper.repository.api.net.Net;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
 import com.troncodroide.heroadventurehelper.repository.models.TownDataRepository;
@@ -54,10 +54,6 @@ public class Repository {
 
     public static class HERO {
 
-        public static void getHeroData(final BaseRequest request, final Response.Listener listener) {
-
-        }
-
         public static void getHeros(BaseRequest<GetHerosRequest> request, final Response.Listener<GetHerosResponse> listener) {
             getMemCache().getData(request.hashRequest(), new MemCache.CacheListener<GetHerosResponse>() {
                 @Override
@@ -67,16 +63,13 @@ public class Repository {
 
                 @Override
                 public void onNoCacheDataFound(String key) {
-                    List<HeroData> heros = new LinkedList<HeroData>();
+                    List<HeroData> heros = new LinkedList<>();
                     heros.add(new HeroData());
                     listener.onSuccess(new GetHerosResponse(heros), true);
                 }
             });
         }
 
-        public static void getHeroStatistics(final BaseRequest request, final Response.Listener listener) {
-
-        }
     }
 
     public static class TOWN {
@@ -111,9 +104,6 @@ public class Repository {
             });
         }
 
-        public static void getInfoTown(final BaseRequest request, Response.Listener listener) {
-
-        }
 
         public static void getCiticens(final BaseRequest<GetCiticensRequest> request, final Response.Listener<GetCiticensResponse> listener) {
             getMemCache().getData(request.hashRequest(), new MemCache.CacheListener<GetCiticensResponse>() {
@@ -143,12 +133,6 @@ public class Repository {
         }
     }
 
-    public static class CITICEN {
-
-        public static void getCiticenDetails(final BaseRequest request, Response.Listener result) {
-        }
-    }
-
     public static class DATA {
 
         public static void getData(final BaseRequest<GetTownInfoRequest> request, final Response.Listener<GetTownInfoResponse> listener) {
@@ -167,7 +151,7 @@ public class Repository {
                         public void onDiskDataRetrieved(final String key, GetTownInfoResponse data, boolean isAlive) {
                             listener.onSuccess(data, true);
                             if (!isAlive) {
-                                API.getAppData(new API.APIListener<Map<String, List<CiticenDataRepository>>>() {
+                                Net.getAppData(new Net.APIListener<Map<String, List<CiticenDataRepository>>>() {
                                     @Override
                                     public void onSuccess(Map<String, List<CiticenDataRepository>> data) {
                                         getMemCache().putData(key, new GetTownInfoResponse(data));
@@ -184,7 +168,7 @@ public class Repository {
 
                         @Override
                         public void onNoDiskDataFound(final String key) {
-                            API.getAppData(new API.APIListener<Map<String, List<CiticenDataRepository>>>() {
+                            Net.getAppData(new Net.APIListener<Map<String, List<CiticenDataRepository>>>() {
                                 @Override
                                 public void onSuccess(Map<String, List<CiticenDataRepository>> data) {
                                     getMemCache().putData(key, new GetTownInfoResponse(data));

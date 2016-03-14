@@ -1,39 +1,21 @@
 package com.troncodroide.heroadventurehelper.Base;
 
 import android.app.ProgressDialog;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
-import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.APP;
 
-import butterknife.ButterKnife;
-
-
+/**
+ * Base activity responsible for saving the context, show and hide mistakes and loading processes
+ */
 public class BaseActivity extends AppCompatActivity {
     private ProgressDialog pd;
 
-    public CoordinatorLayout snackbar_target;
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-    }
-
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-    }
+    protected CoordinatorLayout snackbar_target;
 
     public void showActionBar() {
         if (getSupportActionBar() != null) {
@@ -70,31 +52,10 @@ public class BaseActivity extends AppCompatActivity {
     private ProgressDialog loadingDialog(String title, String message) {
 
         ProgressDialog progDialog = new ProgressDialog(this);
-//        {
-//            TextView title, message;
-//
-//            @Override
-//            public void setMessage(CharSequence message) {
-//                super.setMessage(message);
-//                if (this.message == null)
-//                    this.message = (TextView) this.findViewById(android.R.id.message);
-//                this.message.setText(message);
-//            }
-//
-//            @Override
-//            public void setTitle(CharSequence title) {
-//                super.setTitle(title);
-//                if (this.title == null)
-//                    this.title = (TextView) this.findViewById(android.R.id.title);
-//                this.title.setText(title);
-//            }
-//        };
         progDialog.setCancelable(false);
-        progDialog.show();
-        //progDialog.setContentView(R.layout.progress_dialog_simple);
         progDialog.setTitle(title);
         progDialog.setMessage(message);
-        //progDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+        progDialog.show();
 
         return progDialog;
     }

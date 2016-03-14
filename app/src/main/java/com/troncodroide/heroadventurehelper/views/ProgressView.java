@@ -5,22 +5,16 @@ import android.content.Context;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.R;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by Tronco on 12/03/2016.
- */
 public class ProgressView extends FrameLayout implements ProgressViewInterface {
     private ProgressListener _listener;
 

@@ -16,7 +16,6 @@ import java.util.Locale;
 
 public class APP extends MultiDexApplication {
     private static Context _context;
-    private static final String ANALYTICS_ID = "UA-72892818-1";
 
     @Override
     public void onCreate() {

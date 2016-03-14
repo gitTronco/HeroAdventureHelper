@@ -7,8 +7,8 @@ import com.github.pwittchen.prefser.library.TypeToken;
 import com.troncodroide.heroadventurehelper.APP;
 
 /**
- * Created by Tronco on 10/03/2016.
- */
+ * Prefser class who saves objects into Android SharedPreference using reflection.
+ * */
 public class BasePrefser<T> {
 
     protected String prefserTag;

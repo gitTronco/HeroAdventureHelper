@@ -81,10 +81,7 @@ public class NavigationManager extends Observable {
 
             case NavigationManager.TARGET_TOWNS: {
                 Fragment f = fm.findFragmentByTag(TownsFragment.TAG);
-                if (f != null) {
-                    ((TownsFragment) f).reload();
-                } else {
-
+                if (f == null) {
                     toret = TownsFragment.newInstance();
                     ft.replace(R.id.frame, toret, TownsFragment.TAG);
                 }

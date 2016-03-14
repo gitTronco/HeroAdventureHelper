@@ -19,9 +19,8 @@ import java.util.List;
 public class TownsFragment extends BaseFragment implements TownPresenter.LaunchPresenterInterface {
     public static final String TAG = "TownsFragment";
 
-    RecyclerView reciclerView;
-
-    TownPresenter presenter;
+    private RecyclerView reciclerView;
+    private TownPresenter presenter;
 
     public TownsFragment() {
     }
@@ -73,6 +72,4 @@ public class TownsFragment extends BaseFragment implements TownPresenter.LaunchP
         }));
     }
 
-    public void reload() {
-    }
 }

@@ -15,9 +15,6 @@ import com.troncodroide.heroadventurehelper.models.HeroData;
 import butterknife.Bind;
 import butterknife.ButterKnife;
 
-/**
- * Created by Tronco on 08/03/2016.
- */
 
 public class HeroCardView extends FrameLayout {
 

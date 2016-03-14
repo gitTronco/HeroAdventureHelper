@@ -21,21 +21,16 @@ import butterknife.Bind;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-/**
- * Created by Tronco on 08/03/2016.
- */
 public class FilterFragment extends BaseDialogFragment implements FilterPresenter.FilterPresenterInterface {
 
     public static final String TAG = "FilterFragment";
 
-    FilterPresenter presenter;
-
-    String town;
-
-    FragmentFilterListener _listener;
+    private FilterPresenter presenter;
+    private String town;
+    private FragmentFilterListener _listener;
 
     @Bind(R.id.recycler)
-    RecyclerView recyclerView;
+    public RecyclerView recyclerView;
 
     @OnClick({R.id.filter_apply, R.id.filter_cancel, R.id.filter_clear})
     public void onClick(View v) {

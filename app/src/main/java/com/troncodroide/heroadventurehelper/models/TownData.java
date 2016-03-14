@@ -2,12 +2,9 @@ package com.troncodroide.heroadventurehelper.models;
 
 import java.util.List;
 
-/**
- * Created by Tronco on 06/03/2016.
- */
 public class TownData {
-    String name;
-    List<CiticenData> citicens;
+    private String name;
+    private List<CiticenData> citicens;
 
     public TownData(String name, List<CiticenData> citicens) {
         this.name = name;

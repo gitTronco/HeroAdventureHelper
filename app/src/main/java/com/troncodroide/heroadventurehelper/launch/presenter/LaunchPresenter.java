@@ -9,8 +9,8 @@ import java.util.List;
 
 public class LaunchPresenter extends BasePresenter implements LaunchInteractor.HerosInteractor.HerosListener,LaunchInteractor.APPInteractor.APPListener  {
 
-    LaunchInteractor.HerosInteractor _interactor;
-    LaunchInteractor.APPInteractor _interactorAPP;
+    private LaunchInteractor.HerosInteractor _interactor;
+    private LaunchInteractor.APPInteractor _interactorAPP;
 
     public LaunchPresenter(LaunchPresenterInterface listener) {
         super(listener);

@@ -1,8 +1,5 @@
 package com.troncodroide.heroadventurehelper.launch;
 
-import android.animation.ArgbEvaluator;
-import android.animation.ValueAnimator;
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;

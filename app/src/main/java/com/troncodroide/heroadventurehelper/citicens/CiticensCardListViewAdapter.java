@@ -1,6 +1,5 @@
 package com.troncodroide.heroadventurehelper.citicens;
 
-import android.support.v7.graphics.Palette;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,8 +16,6 @@ import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.managers.LoadImageManager;
 import com.troncodroide.heroadventurehelper.models.CiticenData;
 import com.troncodroide.heroadventurehelper.views.CollapsableLayoutView;
-
-import org.w3c.dom.Text;
 
 import java.util.List;
 

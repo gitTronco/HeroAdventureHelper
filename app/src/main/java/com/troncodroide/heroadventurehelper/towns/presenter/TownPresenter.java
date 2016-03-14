@@ -2,7 +2,6 @@ package com.troncodroide.heroadventurehelper.towns.presenter;
 
 import com.troncodroide.heroadventurehelper.Base.BasePresenter;
 import com.troncodroide.heroadventurehelper.Base.interfaces.PresenterListener;
-import com.troncodroide.heroadventurehelper.models.HeroData;
 import com.troncodroide.heroadventurehelper.models.TownData;
 import com.troncodroide.heroadventurehelper.towns.interactor.TownInteractor;
 
@@ -10,7 +9,7 @@ import java.util.List;
 
 public class TownPresenter extends BasePresenter implements TownInteractor.TownsListener {
 
-    TownInteractor _interactor;
+    private TownInteractor _interactor;
 
     public TownPresenter(LaunchPresenterInterface listener) {
         super(listener);

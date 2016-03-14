@@ -2,30 +2,23 @@ package com.troncodroide.heroadventurehelper;
 
 import android.os.Bundle;
 import android.support.design.widget.CoordinatorLayout;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
-import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.Base.BaseActivity;
-import com.troncodroide.heroadventurehelper.Base.interfaces.ToolbarInterface;
 import com.troncodroide.heroadventurehelper.citicens.CiticensFragment;
 import com.troncodroide.heroadventurehelper.filter.FilterFragment;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.managers.NavigationManager;
 import com.troncodroide.heroadventurehelper.views.ProgressView;
 import com.troncodroide.heroadventurehelper.views.ProgressViewInterface;
 
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -73,14 +66,6 @@ public class MainActivity extends BaseActivity
         } else {
             super.onBackPressed();
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return true;
     }
 
     @Override
@@ -142,8 +127,6 @@ public class MainActivity extends BaseActivity
             toolbar.getMenu().clear();
             if (NavigationManager.getTarget() == NavigationManager.TARGET_CITICENS) {
                 toolbar.inflateMenu(R.menu.citicens);
-            } else {
-                toolbar.inflateMenu(R.menu.main);
             }
         }
     }

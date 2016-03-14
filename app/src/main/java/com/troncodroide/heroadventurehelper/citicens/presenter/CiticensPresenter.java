@@ -17,7 +17,7 @@ import java.util.List;
 
 public class CiticensPresenter extends BasePresenter implements CiticensInteractor.CiticensListener {
 
-    CiticensInteractor _interactor;
+    private CiticensInteractor _interactor;
     private List<CiticenData> originalCiticens;
 
     public CiticensPresenter(CiticensPresenterInterface listener) {
@@ -88,11 +88,6 @@ public class CiticensPresenter extends BasePresenter implements CiticensInteract
         new AsyncTask<Void, CiticenData, Void>() {
 
             @Override
-            protected void onPreExecute() {
-                super.onPreExecute();
-            }
-
-            @Override
             protected Void doInBackground(Void... params) {
                 try {
                     Thread.sleep(500);
@@ -100,10 +95,10 @@ public class CiticensPresenter extends BasePresenter implements CiticensInteract
                         if (selectedFilters.evalue(citicen)) {
                             publishProgress(citicen);
                         } else {
-                            publishProgress(null);
+                            publishProgress(new CiticenData());
                         }
                     }
-                } catch (Exception ex) {
+                } catch (InterruptedException ignored) {
                 }
                 return null;
             }
@@ -116,7 +111,7 @@ public class CiticensPresenter extends BasePresenter implements CiticensInteract
                 super.onProgressUpdate(values);
                 progress++;
                 progressFiltering(progress);
-                if (values != null && values[0] != null) {
+                if (values != null && values[0].getId() != -1) {
                     size++;
                     ((CiticensPresenterInterface) _listener).onCiticenSuccess(values[0]);
                 }

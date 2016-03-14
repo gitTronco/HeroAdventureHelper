@@ -2,18 +2,13 @@ package com.troncodroide.heroadventurehelper.towns.interactor;
 
 import com.troncodroide.heroadventurehelper.Base.interfaces.ErrorListener;
 import com.troncodroide.heroadventurehelper.models.CiticenData;
-import com.troncodroide.heroadventurehelper.models.HeroData;
 import com.troncodroide.heroadventurehelper.models.TownData;
 import com.troncodroide.heroadventurehelper.repository.Repository;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
 import com.troncodroide.heroadventurehelper.repository.models.TownDataRepository;
 import com.troncodroide.heroadventurehelper.repository.request.BaseRequest;
-import com.troncodroide.heroadventurehelper.repository.request.GetHerosRequest;
-import com.troncodroide.heroadventurehelper.repository.request.GetTownInfoRequest;
 import com.troncodroide.heroadventurehelper.repository.request.GetTownsRequest;
-import com.troncodroide.heroadventurehelper.repository.responses.GetHerosResponse;
-import com.troncodroide.heroadventurehelper.repository.responses.GetTownInfoResponse;
 import com.troncodroide.heroadventurehelper.repository.responses.GetTownsResponse;
 
 import java.util.LinkedList;
@@ -38,7 +33,7 @@ public class TownInteractor {
             }
 
             private List<TownData> validateAndTrasnformData(List<TownDataRepository> list) {
-                List<TownData> toRet = new LinkedList<TownData>();
+                List<TownData> toRet = new LinkedList<>();
                 for (TownDataRepository data : list) {
                     toRet.add(new TownData(data.getName(), validateAndTrasnformCiticenData(data.getCiticens())));
                 }
@@ -46,7 +41,7 @@ public class TownInteractor {
             }
 
             private List<CiticenData> validateAndTrasnformCiticenData(List<CiticenDataRepository> list) {
-                List<CiticenData> toRet = new LinkedList<CiticenData>();
+                List<CiticenData> toRet = new LinkedList<>();
                 for (CiticenDataRepository data : list) {
                     toRet.add(
                             new CiticenData(

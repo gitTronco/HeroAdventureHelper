@@ -7,7 +7,6 @@ import android.view.ViewGroup;
 
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.filter.models.FilterCategory;
-import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.views.FilterCategoryRangeView;
 import com.troncodroide.heroadventurehelper.views.FilterCategoryView;
 

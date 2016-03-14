@@ -5,7 +5,6 @@ import android.os.AsyncTask;
 import com.troncodroide.heroadventurehelper.Base.interfaces.ErrorListener;
 import com.troncodroide.heroadventurehelper.filter.models.FilterCategory;
 import com.troncodroide.heroadventurehelper.filter.models.FilterValue;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 import com.troncodroide.heroadventurehelper.repository.Repository;
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response;
 import com.troncodroide.heroadventurehelper.repository.models.CiticenDataRepository;
@@ -65,7 +64,7 @@ public class FilterInteractor {
                         profesionsCategory.addValue(new FilterValue(profesion));
                     }
                 }
-                List<FilterCategory> listCategories = new LinkedList<FilterCategory>();
+                List<FilterCategory> listCategories = new LinkedList<>();
                 listCategories.add(hairCategory);
                 listCategories.add(ageCategory);
                 listCategories.add(weightCategory);

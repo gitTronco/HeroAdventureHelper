@@ -176,8 +176,7 @@ public class CollapsableLayoutView extends LinearLayout {
                     R.styleable.CollapsableLayoutView,
                     0, 0);
             try {
-                int value = a.getInteger(R.styleable.CollapsableLayoutView_setCollapseInitState, STATE_OPEN);
-                return value;
+                return a.getInteger(R.styleable.CollapsableLayoutView_setCollapseInitState, STATE_OPEN);
             } finally {
                 a.recycle();
             }
@@ -193,8 +192,7 @@ public class CollapsableLayoutView extends LinearLayout {
                     R.styleable.CollapsableLayoutView,
                     0, 0);
             try {
-                int value = a.getInteger(R.styleable.CollapsableLayoutView_setCollapseAnimationTime, DEFAULT_ANIMATION_DURATION);
-                return value;
+                return a.getInteger(R.styleable.CollapsableLayoutView_setCollapseAnimationTime, DEFAULT_ANIMATION_DURATION);
             } finally {
                 a.recycle();
             }

@@ -2,17 +2,12 @@ package com.troncodroide.heroadventurehelper.repository.api.cache;
 
 import android.content.Context;
 import android.os.AsyncTask;
-import android.os.Handler;
-import android.os.Looper;
-import android.os.Message;
 import android.util.Log;
 
 import com.github.pwittchen.prefser.library.Prefser;
 import com.github.pwittchen.prefser.library.TypeToken;
 import com.troncodroide.heroadventurehelper.APP;
 import com.troncodroide.heroadventurehelper.repository.api.TTL;
-
-import java.lang.ref.WeakReference;
 
 public class DiskCache {
     public static final String TAG = "DiskCache";
@@ -58,7 +53,7 @@ public class DiskCache {
                         listener.onNoDiskDataFound(key);
                         break;
                     case MESSAGE_GET_DATA:
-                        listener.onDiskDataRetrieved(key, (T) ttl.getData(), ttl.isAlive());
+                        listener.onDiskDataRetrieved(key, ttl.getData(), ttl.isAlive());
                         break;
                     default:
                         break;

@@ -32,7 +32,7 @@ public class CiticensInteractor {
 
 
             private List<CiticenData> validateAndTrasnformCiticenData(List<CiticenDataRepository> list) {
-                List<CiticenData> toRet = new LinkedList<CiticenData>();
+                List<CiticenData> toRet = new LinkedList<>();
                 for (CiticenDataRepository data : list) {
                     toRet.add(
                             new CiticenData(

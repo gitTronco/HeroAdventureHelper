@@ -5,15 +5,12 @@ import android.os.Parcelable;
 
 import java.util.List;
 
-/**
- * Created by Tronco on 04/03/2016.
- */
 public class CiticenDataRepository implements Parcelable{
-    String name,thumbnail,hair_color;
-    Integer id,age;
-    Double weight,height;
-    List<String> professions;
-    List<String> friends;
+    private String name,thumbnail,hair_color;
+    private Integer id,age;
+    private Double weight,height;
+    private List<String> professions;
+    private List<String> friends;
 
     public String getName() {
         return name;

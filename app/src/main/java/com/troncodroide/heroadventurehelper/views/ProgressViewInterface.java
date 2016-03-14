@@ -1,8 +1,5 @@
 package com.troncodroide.heroadventurehelper.views;
 
-/**
- * Created by Tronco on 12/03/2016.
- */
 public interface ProgressViewInterface {
     void setTitle(String title);
 

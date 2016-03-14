@@ -7,11 +7,11 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class HeroData {
-    String name;
-    int resImage;
-    int level;
-    int id;
-    List<Ability> abilities;
+    private String name;
+    private int resImage;
+    private int level;
+    private int id;
+    private List<Ability> abilities;
 
     public HeroData() {
         name = "Jhon Doe";

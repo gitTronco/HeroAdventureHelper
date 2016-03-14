@@ -5,24 +5,23 @@ import android.content.Context;
 import com.github.pwittchen.prefser.library.Prefser;
 import com.github.pwittchen.prefser.library.TypeToken;
 import com.troncodroide.heroadventurehelper.APP;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
 
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Tronco on 06/03/2016.
- */
 public class CiticenData {
 
-    String name, thumbnail, hair_color;
-    Integer id, age;
-    Double weight, height;
-    List<String> professions;
-    List<String> friends;
-    Map<String, Integer> helped;
+    private String name, thumbnail, hair_color;
+    private Integer id, age;
+    private Double weight, height;
+    private List<String> professions;
+    private List<String> friends;
+    private Map<String, Integer> helped;
 
+    public CiticenData() {
+        this.id = -1;
+    }
 
     public CiticenData(String name, String thumbnail, String hair_color, Integer id, Integer age, Double weight, Double height, List<String> professions, List<String> friends, Map<String, Integer> helped) {
         this.name = name;

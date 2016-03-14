@@ -1,9 +1,9 @@
 package com.troncodroide.heroadventurehelper.filter.models;
 
 public class FilterValue {
-    String name;
-    boolean selected;
-    int type;
+    private String name;
+    private boolean selected;
+    private int type;
 
     @Override
     public String toString() {

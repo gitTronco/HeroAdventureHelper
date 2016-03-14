@@ -4,11 +4,10 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 import java.util.List;
-import java.util.Random;
 
 public class TownDataRepository implements Parcelable {
-    String name;
-    List<CiticenDataRepository> citicens;
+    private String name;
+    private List<CiticenDataRepository> citicens;
 
     public TownDataRepository(String name, List<CiticenDataRepository> citicens) {
         this.name = name;

@@ -1,8 +1,5 @@
 package com.troncodroide.heroadventurehelper.repository.api.net;
 
-/**
- * Created by Usuario-007 on 19/02/2016.
- */
 import com.troncodroide.heroadventurehelper.repository.interfaces.Response.Error;
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -10,9 +7,9 @@ import retrofit2.Response;
 
 public class NetCallback<T> implements Callback<T> {
 
-    API.APIListener<T> listener;
+    Net.APIListener<T> listener;
 
-    public NetCallback(API.APIListener<T> listener) {
+    public NetCallback(Net.APIListener<T> listener) {
         this.listener = listener;
     }
 

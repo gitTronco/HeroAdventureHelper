@@ -1,9 +1,5 @@
 package com.troncodroide.heroadventurehelper.filter.models;
 
-import android.util.Log;
-
-import com.troncodroide.heroadventurehelper.models.CiticenData;
-
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,8 +22,8 @@ public class FilterCategory {
     public static final int TYPE_HEIGHT = 16;       // 0010000
     public static final int TYPE_HAIR = 32;         // 0100000
     public static final int TYPE_PROFESION = 64;    // 1000000
-    String name;
-    List<FilterValue> values;
+    private String name;
+    private List<FilterValue> values;
     private int type;
 
     public FilterCategory(int type, String name) {

@@ -11,12 +11,8 @@ import android.view.ViewGroup;
 import com.troncodroide.heroadventurehelper.Base.BaseFragment;
 import com.troncodroide.heroadventurehelper.R;
 import com.troncodroide.heroadventurehelper.citicens.presenter.CiticensPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter;
-import com.troncodroide.heroadventurehelper.filter.presenter.FilterPresenter.SelectedFilters;
 import com.troncodroide.heroadventurehelper.managers.ConfigurationManager;
 import com.troncodroide.heroadventurehelper.models.CiticenData;
-import com.troncodroide.heroadventurehelper.models.TownData;
-import com.troncodroide.heroadventurehelper.views.ProgressView;
 import com.troncodroide.heroadventurehelper.views.ProgressViewInterface;
 
 import java.util.LinkedList;
@@ -25,9 +21,9 @@ import java.util.List;
 public class CiticensFragment extends BaseFragment implements CiticensPresenter.CiticensPresenterInterface {
     public static final String TAG = "CiticensFragment";
 
-    RecyclerView reciclerView;
-    ProgressViewInterface progressView;
-    CiticensPresenter presenter;
+    private RecyclerView reciclerView;
+    private ProgressViewInterface progressView;
+    private CiticensPresenter presenter;
     private String town;
 
     public CiticensFragment() {

@@ -8,10 +8,7 @@ import com.troncodroide.heroadventurehelper.repository.retrofit.RetrofitServices
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by Usuario-007 on 22/02/2016.
- */
-public class API {
+public class Net {
 
     public interface APIListener<T> {
         void onSuccess(T data);

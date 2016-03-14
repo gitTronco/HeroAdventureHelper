@@ -6,11 +6,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.troncodroide.heroadventurehelper.R;
-import com.troncodroide.heroadventurehelper.models.HeroData;
 import com.troncodroide.heroadventurehelper.models.TownData;
 
 import java.util.List;

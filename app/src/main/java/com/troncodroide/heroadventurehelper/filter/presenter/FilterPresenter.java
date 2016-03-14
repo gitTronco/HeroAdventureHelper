@@ -2,8 +2,6 @@ package com.troncodroide.heroadventurehelper.filter.presenter;
 
 import android.util.Log;
 
-import com.github.pwittchen.prefser.library.TypeToken;
-import com.troncodroide.heroadventurehelper.Base.BasePrefser;
 import com.troncodroide.heroadventurehelper.Base.BasePresenter;
 import com.troncodroide.heroadventurehelper.Base.interfaces.PresenterListener;
 import com.troncodroide.heroadventurehelper.filter.interactor.FilterInteractor;
@@ -19,7 +17,7 @@ import java.util.List;
 
 public class FilterPresenter extends BasePresenter implements FilterInteractor.FilterListener {
 
-    FilterInteractor _interactor;
+    private FilterInteractor _interactor;
     private static List<FilterCategory> filters;
 
     public FilterPresenter(FilterPresenterInterface listener) {
