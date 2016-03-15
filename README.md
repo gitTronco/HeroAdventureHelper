@@ -14,8 +14,11 @@ The clean architecture is achieved by attaching the MVP with the Model Repositor
 The normal flow for any process is, View -> Presenter -> Interactor -> Repository -.> (Memory, disk or Internet)
 
 View: Represents the information.
+
 Presenter: Business Logic.
+
 Interactor: Validates and adapts information
+
 Repository: Decide where you get the information. Disc, memory or internet.
 
 All data is retrieved from repository and validate into interactors classes. 
